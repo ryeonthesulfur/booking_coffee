@@ -8,7 +8,12 @@ class Reservation < ApplicationRecord
     validates :num_people
     validates :total_price
     validates :status
+    validates :phone_number
   end
+
+  validates :num_people, numericality: { only_integer: true, greater_than: 0 }
+  validates :total_price, numericality: { greater_than_or_equal_to: 0 }
+  validates :phone_number, format: { with: /\A\d{10,11}\z/ }
 
   validate :end_time_after_start_time
 
