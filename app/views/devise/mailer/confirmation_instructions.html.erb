@@ -1,5 +1,20 @@
-<p>Welcome <%= @email %>!</p>
+<h2 style="font-size: 18px; font-weight: 700; color: #0c0a09; margin-top: 0; margin-bottom: 16px;">
+  メールアドレスの確認
+</h2>
 
-<p>You can confirm your account email through the link below:</p>
+<p style="margin-top: 0; margin-bottom: 12px;">
+  こんにちは、<%= @email %> さん
+</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p style="margin-top: 0; margin-bottom: 24px; color: #57534e;">
+  booking_coffee へのご登録ありがとうございます。<br>
+  以下のボタンをクリックして、メールアドレスの確認を完了してください。
+</p>
+
+<div style="text-align: left; margin-top: 32px; margin-bottom: 32px;">
+  <%= link_to 'メールアドレスを確認する', confirmation_url(@resource, confirmation_token: @token), style: "display: inline-block; background-color: #78350f; color: #ffffff; font-weight: bold; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" %>
+</div>
+
+<p style="margin-top: 0; margin-bottom: 0; font-size: 12px; color: #a8a29e; border-top: 1px solid #e7e5e4; padding-top: 16px;">
+  お心当たりがない場合は、このメールを破棄していただいて構いません。
+</p>
