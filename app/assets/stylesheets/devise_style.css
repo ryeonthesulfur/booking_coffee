@@ -198,3 +198,29 @@
 .auth-links a:hover {
   color: #1c1917;
 }
+
+/* エラーメッセージ
+   使用ページ: 全Deviseページ */
+#error_explanation {
+  font-size: 0.75rem;
+  color: #dc2626;
+  background-color: #fef2f2;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+#error_explanation h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+#error_explanation ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+#error_explanation li {
+  margin: 0;
+}
+
+
+
