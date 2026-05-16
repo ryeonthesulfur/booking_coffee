@@ -1,0 +1,67 @@
+<div class="auth-wrapper">
+  
+  <div class="auth-header">
+    <h1>booking_coffee</h1>
+  </div>
+
+  <div class="auth-card">
+    <h2>会員情報の編集</h2>
+
+    <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-space">
+        <div class="field">
+          <%= f.label :email, "メールアドレス", class: "auth-label" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "auth-input" %>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div style="font-size: 0.75rem; color: #d97706; background-color: #fffbeb; padding: 0.5rem 0.75rem; border-radius: 0.5rem;">
+            現在確認待ちのメールアドレス: <%= resource.unconfirmed_email %>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <div class="label-row">
+            <%= f.label :password, "新しいパスワード", class: "auth-label", style: "margin-bottom: 0;" %>
+            <span class="label-hint">（変更しない場合は空欄）</span>
+          </div>
+          <%= f.password_field :password, autocomplete: "new-password", class: "auth-input" %>
+          <% if @minimum_password_length %>
+            <div class="label-hint" style="margin-top: 0.25rem;"><%= @minimum_password_length %>文字以上必要です</div>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation, "新しいパスワード（確認用）", class: "auth-label" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "auth-input" %>
+        </div>
+
+       <div class="field" style="background-color: #fafaf9; padding: 1rem; border-radius: 0.75rem; border: 1px solid #e7e5e4;">
+          <div class="label-row">
+            <%= f.label :current_password, "現在のパスワード", class: "auth-label", style: "margin-bottom: 0; color: #1c1917;" %>
+            <span class="label-hint" style="color: #b45309;">※変更の確認に必須</span>
+          </div>
+          <%= f.password_field :current_password, autocomplete: "current-password", class: "auth-input", style: "background-color: #ffffff;" %>
+
+        </div>
+
+        <div class="actions" style="padding-top: 0.5rem;">
+          <%= f.submit "変更を保存する", class: "btn-submit" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="danger-zone">
+      <h3>アカウントの退会</h3>
+      <div class="danger-text">一度退会すると、これまでの予約履歴などのデータは復元できません。</div>
+      <%= button_to "退会手続きを行う", registration_path(resource_name), data: { confirm: "本当に退会しますか？", turbo_confirm: "本当に退会しますか？" }, method: :delete, class: "btn-danger" %>
+    </div>
+
+    <div class="auth-links" style="border-top: 1px solid #f5f5f4; padding-top: 1rem; margin-top: 1.5rem;">
+      <%= link_to "前の画面に戻る", :back %>
+    </div>
+
+  </div>
+</div>

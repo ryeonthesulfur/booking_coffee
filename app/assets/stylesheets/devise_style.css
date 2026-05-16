@@ -1,0 +1,226 @@
+/*
+ * =====================================================
+ * devise_style.css
+ * 読み込み場所: app/views/layouts/application.html.erb
+ * 適用ページ:  全Deviseページ共通（下記参照）
+ *   - ログイン画面         (sessions/new.html.erb)
+ *   - 新規登録画面         (registrations/new.html.erb)
+ *   - 会員情報編集画面     (registrations/edit.html.erb)
+ *   - パスワード再設定申請 (passwords/new.html.erb)
+ *   - パスワード再設定画面 (passwords/edit.html.erb)
+ *   - メール確認画面       (confirmations/)
+ *
+ * =====================================================
+ */
+
+/* =====================================================
+   共通レイアウト
+   使用ページ: 全Deviseページ
+   ===================================================== */
+
+/* 画面全体のラッパー（縦中央寄せ・背景色） */
+.auth-wrapper {
+  min-height: 100vh;
+  background-color: #f5f5f4; /* stone-50 */
+  color: #44403c; /* stone-800 */
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* タイトル・ロゴエリア */
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.auth-header h1 {
+  font-size: 1.875rem;
+  font-weight: 900;
+  color: #1c1917; /* stone-900 */
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+.auth-header p {
+  font-size: 0.875rem;
+  color: #78716c; /* stone-500 */
+  margin-top: 0.5rem;
+}
+
+/* フォームのカードコンテナ（白い枠） */
+.auth-card {
+  width: 100%;
+  max-width: 28rem; /* max-w-md */
+  background-color: #ffffff;
+  border: 1px solid #e7e5e4; /* stone-200 */
+  border-radius: 1.5rem; /* rounded-3xl */
+  padding: 2rem;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+.auth-card h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0c0a09; /* stone-950 */
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* フォーム内の各フィールドの縦の余白 */
+.form-space {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* space-y-5 */
+}
+
+/* =====================================================
+   フォーム部品
+   使用ページ: 全Deviseページ
+   ===================================================== */
+
+/* 入力欄のラベル */
+.auth-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #57534e; /* stone-600 */
+  margin-bottom: 0.375rem;
+  letter-spacing: 0.05em;
+}
+
+/* ラベルと補足テキストを横並びにするための行
+   使用ページ: 会員情報編集・パスワード再設定画面 */
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.375rem;
+}
+
+/* ラベル横の補足テキスト（「変更しない場合は空欄」など）
+   使用ページ: 会員情報編集・パスワード再設定画面 */
+.label-hint {
+  font-size: 0.625rem;
+  color: #a8a29e; /* stone-400 */
+  font-weight: 500;
+}
+
+/* テキスト入力欄 */
+.auth-input {
+  width: 100%;
+  background-color: #f5f5f4; /* stone-50 */
+  border: 1px solid #e7e5e4; /* stone-200 */
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #1c1917; /* stone-900 */
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03); /* shadow-inner */
+}
+/* 入力欄をクリックした時のハイライト */
+.auth-input:focus {
+  border-color: #78350f; /* amber-800 */
+  box-shadow: 0 0 0 1px #78350f, inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+}
+
+/* =====================================================
+   ログイン専用部品
+   使用ページ: ログイン画面 (sessions/new.html.erb)
+   ===================================================== */
+
+/* 「ログイン状態を保持する」チェックボックスの横並びラッパー */
+.remember-me-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* チェックボックス本体 */
+.auth-checkbox {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  accent-color: #78350f; /* フォームの琥珀色に合わせた色 */
+}
+
+/* チェックボックスの横のラベルテキスト */
+.checkbox-label {
+  font-size: 0.8125rem;
+  color: #57534e;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* =====================================================
+   ボタン・リンク
+   使用ページ: 全Deviseページ
+   ===================================================== */
+
+/* 送信ボタン（登録・ログイン・変更保存など） */
+.btn-submit {
+  width: 100%;
+  background-color: #78350f; /* amber-800 */
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.75rem; /* rounded-xl */
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.btn-submit:hover {
+  background-color: #451a03; /* amber-900 */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* カード下部のリンクエリア（「ログインはこちら」など） */
+.auth-links {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f5f5f4;
+  text-align: center;
+  font-size: 0.75rem;
+}
+.auth-links a {
+  color: #78716c;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.auth-links a:hover {
+  color: #1c1917;
+}
+
+/* エラーメッセージ
+   使用ページ: 全Deviseページ */
+#error_explanation {
+  font-size: 0.75rem;
+  color: #dc2626;
+  background-color: #fef2f2;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+#error_explanation h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+#error_explanation ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+#error_explanation li {
+  margin: 0;
+}
+
+
+

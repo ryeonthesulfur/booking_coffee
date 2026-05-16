@@ -1,0 +1,33 @@
+<div class="auth-wrapper">
+  
+  <div class="auth-header">
+    <h1>booking_coffee</h1>
+  </div>
+
+  <div class="auth-card">
+    <h2>パスワードをお忘れの方</h2>
+    <p style="font-size: 0.8125rem; color: #78716c; text-align: center; margin-top: -1rem; margin-bottom: 1.5rem;">
+      ご登録いただいているメールアドレスを入力してください。<br>再設定用の手順をお送りします。
+    </p>
+
+    <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-space">
+        <div class="field">
+          <%= f.label :email, "メールアドレス", class: "auth-label" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "auth-input" %>
+        </div>
+
+        <div class="actions" style="padding-top: 0.5rem;">
+          <%= f.submit "再設定メールを送信する", class: "btn-submit" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="auth-links">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>

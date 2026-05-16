@@ -1,0 +1,19 @@
+<h2 style="font-size: 18px; font-weight: 700; color: #0c0a09; margin-top: 0; margin-bottom: 16px;">
+  メールアドレス変更のお知らせ
+</h2>
+
+<p style="margin-top: 0; margin-bottom: 12px;">
+  こんにちは、<%= @email %> さん
+</p>
+
+<% if @resource.try(:unconfirmed_email?) %>
+  <p style="margin-top: 0; margin-bottom: 0; color: #57534e;">
+    メールアドレスの変更リクエストを受け付けました。<br>
+    新しいメールアドレス（<%= @resource.unconfirmed_email %>）に確認メールをお送りしましたので、内容をご確認ください。
+  </p>
+<% else %>
+  <p style="margin-top: 0; margin-bottom: 0; color: #57534e;">
+    メールアドレスが <%= @resource.email %> に変更されました。<br>
+    お心当たりがない場合は、すぐにサポートまでご連絡ください。
+  </p>
+<% end %>
