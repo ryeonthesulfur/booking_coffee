@@ -10,11 +10,6 @@
 
     <%= form_with(model: resource, as: resource_name, url: user_session_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
-      <% if flash[:alert] %>
-        <div style="font-size: 0.75rem; color: #dc2626; background-color: #fef2f2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
 
       <div class="form-space">
         
