@@ -1,0 +1,51 @@
+<div class="auth-wrapper">
+  
+  <div class="auth-header">
+    <h1>booking_coffee</h1>
+    <p>お帰りなさい。お気に入りの席が待っています。</p>
+  </div>
+
+  <div class="auth-card">
+    <h2>ログイン</h2>
+
+    <%= form_with(model: resource, as: resource_name, url: user_session_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <% if flash[:alert] %>
+        <div style="font-size: 0.75rem; color: #dc2626; background-color: #fef2f2; padding: 0.5rem 0.75rem; border-radius: 0.5rem; margin-bottom: 0.5rem;">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <div class="form-space">
+        
+        <div class="field">
+          <%= f.label :email, "メールアドレス", class: "auth-label" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "auth-input" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password, "パスワード", class: "auth-label" %>
+          <%= f.password_field :password, autocomplete: "current-password", class: "auth-input" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <div class="remember-me-wrapper">
+              <%= f.check_box :remember_me, class: "auth-checkbox" %>
+              <%= f.label :remember_me, "ログイン状態を保持する", class: "checkbox-label" %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="actions" style="padding-top: 0.5rem;">
+          <%= f.submit "ログインする", class: "btn-submit" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="auth-links">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>

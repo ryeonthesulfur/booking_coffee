@@ -1,0 +1,41 @@
+<div class="auth-wrapper">
+  
+  <div class="auth-header">
+    <h1>booking_coffee</h1>
+  </div>
+
+  <div class="auth-card">
+    <h2>パスワードの再設定</h2>
+
+    <%= form_with(model: resource, as: resource_name, url: user_password_path(resource_name), method: :put, data: { turbo: false }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="form-space">
+        <div class="field">
+          <div class="label-row">
+            <%= f.label :password, "新しいパスワード", class: "auth-label", style: "margin-bottom: 0;" %>
+            <% if @minimum_password_length %>
+              <span class="label-hint">(<%= @minimum_password_length %>文字以上)</span>
+            <% end %>
+          </div>
+          <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "auth-input" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation, "新しいパスワード（確認用）", class: "auth-label" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "auth-input" %>
+        </div>
+
+        <div class="actions" style="padding-top: 0.5rem;">
+          <%= f.submit "パスワードを変更する", class: "btn-submit" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="auth-links">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>
