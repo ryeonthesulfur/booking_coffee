@@ -101,12 +101,20 @@ body {
 }
 
 .top-cta__heading {
-  font-size: 4rem;
+  font-size: 3.3rem;
   font-weight: 900;
   color: #ffffff;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.75rem;
   line-height: 1.3;
   font-family: 'Noto Serif JP', serif;
+}
+
+.top-cta__subtext {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ff5454;
+  margin: 0 0 1.25rem;
+  letter-spacing: 0.03em;
 }
 
 .top-cta__btn {
@@ -203,6 +211,66 @@ body {
   font-family: inherit;
 }
 
+.num-select {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 0.875rem;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+.search-sub-row {
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+  gap: 2rem;
+}
+
+.smoking-filters {
+  display: flex;
+  align-items: center;
+  gap: 1.7rem;
+}
+
+.search-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.875rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.search-filter-item input[type="checkbox"] {
+  accent-color: #92400e;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.filter-buttons--hero {
+  margin-top: 0;
+}
+
+.filter-buttons--hero .filter-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.filter-buttons--hero .filter-btn:hover {
+    border-color: #fffffe;
+}
+
+.filter-buttons--hero .filter-btn--active {
+  background-color: #ffffff;
+  color: #292524;
+  border-color: #ffffff;
+}
+
 .search-submit {
   background-color: #92400e;
   color: #ffffff;
@@ -266,30 +334,62 @@ body {
 
 .filter-btn--active {
   background-color: #292524;
-  color: #ffffff;
+  color: #4a4a4a;
   border-color: #292524;
 }
 
 /* =====================================================
-   席グリッド
+   カルーセル
    ===================================================== */
 
-.seats-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+.seats-carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.seats-carousel__viewport {
+  overflow: hidden;
+  flex: 1;
+  padding: 8px 0;
+  margin: -8px 0;
+}
+
+.seats-carousel__track {
+  display: flex;
   gap: 1.5rem;
+  transition: transform 0.4s ease;
 }
 
-@media (min-width: 768px) {
-  .seats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.seats-carousel__track .seat-card {
+  flex: 0 0 calc((100% - 3rem) / 3);
+  min-width: 0;
 }
 
-@media (min-width: 1024px) {
-  .seats-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.seats-carousel__btn {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #e7e5e4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.2s, opacity 0.2s;
+  color: #1c1917;
+}
+
+.seats-carousel__btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.seats-carousel__btn:disabled {
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
 }
 
 /* =====================================================
@@ -297,6 +397,7 @@ body {
    ===================================================== */
 
 .seat-card {
+  box-sizing: border-box;
   background-color: #ffffff;
   border-radius: 1.5rem;
   overflow: hidden;
@@ -324,6 +425,19 @@ body {
   bottom: 0;
   left: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+}
+
+.seat-card__rating {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(213, 213, 213, 0.2);
+  backdrop-filter: blur(4px);
+  color: #fbbf24;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
 }
 
 .seat-card__tags {
@@ -356,6 +470,30 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.seat-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.seat-card__smoking {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+
+.seat-card__smoking--non {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.seat-card__smoking--yes {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
 .seat-card__name {
   font-size: 1.125rem;
   font-weight: 700;
@@ -363,10 +501,17 @@ body {
   margin: 0;
 }
 
+.seat-card__desc-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.25rem 0 0;
+}
+
 .seat-card__desc {
   font-size: 0.875rem;
   color: #78716c;
-  margin: 0.25rem 0 0;
+  margin: 0;
 }
 
 .seat-card__price {
@@ -423,4 +568,60 @@ body {
 
 .seat-card:hover .seat-card__reserve {
   background-color: #92400e;
+}
+
+/* =====================================================
+   週末セールセクション
+   ===================================================== */
+
+.sale-section {
+  background-color: #f5f0e0;
+  padding: 3rem 1.5rem;
+}
+
+.sale-section__inner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.sale-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.sale-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.375rem;
+  letter-spacing: 0.05em;
+}
+
+.sale-price {
+  text-align: right;
+}
+
+.sale-price__original {
+  display: block;
+  font-size: 0.75rem;
+  color: #a8a29e;
+  text-decoration: line-through;
+}
+
+.sale-price__value {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #dc2626;
+}
+
+.sale-price__unit {
+  display: block;
+  font-size: 10px;
+  color: #a8a29e;
 }
