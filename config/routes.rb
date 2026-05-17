@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+  root "seats#index"
+
   devise_for :users, controllers: {
-  sessions: "users/sessions",
-  passwords: "users/passwords"
-}
+    sessions: "users/sessions",
+    passwords: "users/passwords"
+  }
+
+  resources :seats, only: [ :index ]
 end
 
 
