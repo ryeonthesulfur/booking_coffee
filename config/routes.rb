@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-  root "seats#index"
+  root "stores#index"
 
   devise_for :users, controllers: {
     sessions: "users/sessions",
     passwords: "users/passwords"
   }
 
-  resources :seats, only: [ :index ]
+  resources :stores, only: [ :index, :show ] do
+    resources :seats, only: [ :index, :show ] do
+    end
+  end
 end
 
 
