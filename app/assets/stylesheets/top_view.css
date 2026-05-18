@@ -570,6 +570,7 @@ body {
   font-size: 1rem;
   transition: background-color 0.2s;
   box-sizing: border-box;
+  text-decoration-line: none;
 }
 
 .seat-card:hover .seat-card__reserve {
