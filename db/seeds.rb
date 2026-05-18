@@ -1,31 +1,96 @@
+# 既存データを全削除（外部キー制約があるので reservations → seats → stores の順）
+Reservation.destroy_all
+Seat.destroy_all
+Store.destroy_all
+
+# ── 店舗データ ──────────────────────────────────────────────────────
+# name: 店舗名, image_url: 画像URL, smoking: 喫煙可かどうか
 stores_data = [
-  { name: "カフェ オリゾンテ",      image_url: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "ロースタリー ヒナタ",     image_url: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop", smoking: false },
-  { name: "珈琲処 こもれ日",        image_url: "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=1932&auto=format&fit=crop", smoking: false },
-  { name: "テラッツァ 代官山",       image_url: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "ブルーベル コーヒー",     image_url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "蔵前珈琲店",             image_url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "カフェ・ロンド",          image_url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2070&auto=format&fit=crop", smoking: true  },
-  { name: "喫茶 しずく",            image_url: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "アウトドアコーヒー 翠",   image_url: "https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?q=80&w=2070&auto=format&fit=crop", smoking: true  },
-  { name: "コーヒースタンド 朝陽",   image_url: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "喫茶 ことり",            image_url: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=2069&auto=format&fit=crop", smoking: false },
-  { name: "カフェ・ブランシュ",      image_url: "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=2089&auto=format&fit=crop", smoking: false },
-  { name: "テラス珈琲 海風",         image_url: "https://images.unsplash.com/photo-1511081692775-05d0f180a065?q=80&w=2073&auto=format&fit=crop", smoking: true  },
-  { name: "コーヒーラボ 鶯谷",       image_url: "https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=2187&auto=format&fit=crop", smoking: false },
-  { name: "珈琲と読書 栞",          image_url: "https://images.unsplash.com/photo-1507133750040-4a209f4f9d7e?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "喫茶 むすび",            image_url: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "カフェ ノルテ",           image_url: "https://images.unsplash.com/photo-1464979681340-bdd28a61699e?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "深煎り珈琲 燈",          image_url: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?q=80&w=2070&auto=format&fit=crop", smoking: true  },
-  { name: "コーヒーと時間 庵",       image_url: "https://images.unsplash.com/photo-1473093226555-e4f8c1b8c54f?q=80&w=2070&auto=format&fit=crop", smoking: false },
-  { name: "テラス喫茶 空と風",       image_url: "https://images.unsplash.com/photo-1543332164-6e82f355badc?q=80&w=2070&auto=format&fit=crop", smoking: true  }
+  {
+    name: "カフェ・ロンド",
+    image_url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2070&auto=format&fit=crop",
+    smoking: true
+  },
+  {
+    name: "蔵前喫茶店",
+    image_url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=2070&auto=format&fit=crop",
+    smoking: false
+  },
+  {
+    name: "喫茶むすび",
+    image_url: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=2070&auto=format&fit=crop",
+    smoking: false
+  }
 ]
 
 stores_data.each do |data|
-  Store.find_or_create_by!(name: data[:name]) do |store|
-    store.image_url = data[:image_url]
-    store.smoking   = data[:smoking]
-  end
+  Store.create!(data)
 end
 
 puts "#{Store.count}店舗のシードが完了しました"
+
+# ── 席データ ────────────────────────────────────────────────────────
+# 店舗名をキーにして、その店舗の席一覧をまとめたハッシュ
+# seat_number: 席番号（A=カウンター, B=テーブル, C=テラス）
+# capacity: 最大人数, price_per_hour: 1時間あたりの料金（円）
+seats_by_store = {
+  "カフェ・ロンド" => [
+    { seat_number: "A-1", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
+    { seat_number: "A-2", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
+    { seat_number: "A-3", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
+    { seat_number: "A-4", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
+    { seat_number: "A-5", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
+    { seat_number: "B-1", seat_type: "テーブル席",   capacity: 2, price_per_hour: 800 },
+    { seat_number: "B-2", seat_type: "テーブル席",   capacity: 4, price_per_hour: 1100 },
+    { seat_number: "B-3", seat_type: "テーブル席",   capacity: 2, price_per_hour: 800 },
+    { seat_number: "B-4", seat_type: "テーブル席",   capacity: 4, price_per_hour: 1100 },
+    { seat_number: "C-1", seat_type: "テラス席",     capacity: 2, price_per_hour: 900 },
+    { seat_number: "C-2", seat_type: "テラス席",     capacity: 4, price_per_hour: 1300 },
+  ],
+  "蔵前喫茶店" => [
+    { seat_number: "A-1", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "A-2", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "A-3", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "A-4", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "A-5", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "A-6", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "A-7", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
+    { seat_number: "B-1", seat_type: "テーブル席",   capacity: 2, price_per_hour: 850 },
+    { seat_number: "B-2", seat_type: "テーブル席",   capacity: 4, price_per_hour: 1200 },
+    { seat_number: "B-3", seat_type: "テーブル席",   capacity: 2, price_per_hour: 850 },
+  ],
+  "喫茶むすび" => [
+    { seat_number: "B-1", seat_type: "テーブル席", capacity: 2, price_per_hour: 750 },
+    { seat_number: "B-2", seat_type: "テーブル席", capacity: 4, price_per_hour: 1050 },
+    { seat_number: "B-3", seat_type: "テーブル席", capacity: 2, price_per_hour: 750 },
+    { seat_number: "B-4", seat_type: "テーブル席", capacity: 4, price_per_hour: 1050 },
+    { seat_number: "B-5", seat_type: "テーブル席", capacity: 2, price_per_hour: 750 },
+    { seat_number: "B-6", seat_type: "テーブル席", capacity: 4, price_per_hour: 1050 },
+    { seat_number: "C-1", seat_type: "テラス席",   capacity: 2, price_per_hour: 850 },
+    { seat_number: "C-2", seat_type: "テラス席",   capacity: 2, price_per_hour: 850 },
+    { seat_number: "C-3", seat_type: "テラス席",   capacity: 4, price_per_hour: 1150 },
+  ]
+}
+
+# 店舗名でDBから店舗を取得し、その店舗に紐づけて席を作成
+seats_by_store.each do |store_name, seats_data|
+  store = Store.find_by!(name: store_name)
+  seats_data.each do |data|
+    store.seats.create!(data)
+  end
+end
+
+puts "#{Seat.count}席のシードが完了しました"
+
+# ── create! のイメージ ───────────────────────────────────────────────
+# store.seats.create!(data) が実行されるたびに、
+# seats テーブルに 1行 追加される。
+#
+# id | store_id | seat_number | seat_type    | capacity | price_per_hour
+# ---|----------|-------------|--------------|----------|---------------
+#  1 |    1     |    A-1      | カウンター席  |    1     |     500
+#  2 |    1     |    A-2      | カウンター席  |    1     |     500
+#  3 |    1     |    B-1      | テーブル席    |    2     |     800
+#  4 |    2     |    A-1      | カウンター席  |    1     |     550  ← 蔵前喫茶店の席
+#
+# seeds.rb を実行すると、この表に 30行分のデータが一気に追加される。
