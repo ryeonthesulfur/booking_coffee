@@ -27,7 +27,7 @@ function getMaxDate() {
 }
 
 // HTMLのDOMが読み込み完了してから実行する
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbo:load', function () {
 
   // ── Flatpickr（日時選択カレンダー）の初期化 ──
   const dateInput = document.getElementById('date-input');
