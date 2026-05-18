@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_17_120310) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_18_000001) do
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "notes"
@@ -37,7 +37,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_120310) do
 
   create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "image_url"
+    t.string "image_url", null: false
     t.string "name", null: false
     t.boolean "smoking", default: false, null: false
     t.datetime "updated_at", null: false
