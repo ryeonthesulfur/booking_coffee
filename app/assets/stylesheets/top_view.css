@@ -37,7 +37,9 @@ body {
   color: #1c1917;
   letter-spacing: -0.025em;
   font-family: 'Noto Serif JP', serif;
+  text-decoration: none;
 }
+
 
 .top-nav__tagline {
   font-size: 0.875rem;
@@ -392,6 +394,10 @@ body {
   cursor: default;
 }
 
+.seats-carousel__btn:disabled {
+  display: none;
+}
+
 /* =====================================================
    席カード
    ===================================================== */
@@ -564,6 +570,7 @@ body {
   font-size: 1rem;
   transition: background-color 0.2s;
   box-sizing: border-box;
+  text-decoration-line: none;
 }
 
 .seat-card:hover .seat-card__reserve {

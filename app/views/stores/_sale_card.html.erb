@@ -1,0 +1,24 @@
+<div class="seat-card">
+  <div class="seat-card__image" style="background-image: url('<%= image_url %>');"><div class="seat-card__overlay"></div><div class="seat-card__rating"><%= star_rating %></div><span class="sale-badge">週末特価</span></div>
+  <div class="seat-card__body">
+    <div class="seat-card__top">
+      <div>
+        <div class="seat-card__name-row"><h3 class="seat-card__name"><%= name %></h3></div>
+        <div class="seat-card__desc-row">
+          <p class="seat-card__desc"><%= seat_type %></p>
+          <% if smoking %>
+            <span class="seat-card__smoking seat-card__smoking--yes">喫煙</span>
+          <% else %>
+            <span class="seat-card__smoking seat-card__smoking--non">禁煙</span>
+          <% end %>
+        </div>
+      </div>
+      <div class="sale-price"><span class="sale-price__original"><%= original_price %></span><span class="sale-price__value"><%= sale_price %></span><span class="sale-price__unit">/ 1時間</span></div>
+    </div>
+    <div class="seat-card__meta-row">
+      <div class="seat-card__meta-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>最大<%= capacity %>名</div>
+      <div class="seat-card__meta-item"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>予約可</div>
+    </div>
+    <button class="seat-card__reserve">この席を見てみる<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+  </div>
+</div>
