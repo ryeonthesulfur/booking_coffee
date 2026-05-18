@@ -37,7 +37,9 @@ body {
   color: #1c1917;
   letter-spacing: -0.025em;
   font-family: 'Noto Serif JP', serif;
+  text-decoration: none;
 }
+
 
 .top-nav__tagline {
   font-size: 0.875rem;
@@ -390,6 +392,10 @@ body {
   opacity: 0;
   pointer-events: none;
   cursor: default;
+}
+
+.seats-carousel__btn:disabled {
+  display: none;
 }
 
 /* =====================================================
