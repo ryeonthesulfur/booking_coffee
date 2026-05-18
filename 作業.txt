@@ -1,0 +1,36 @@
+<% seats = [
+  { image_url: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?q=80&w=2070&auto=format&fit=crop", name: "カフェ オリゾンテ",    seat_type: "カウンター席", smoking: false, price: "¥500", capacity: 2 },
+  { image_url: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop", name: "ロースタリー ヒナタ",   seat_type: "テーブル席",   smoking: false, price: "¥800", capacity: 4 },
+  { image_url: "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=1932&auto=format&fit=crop", name: "珈琲処 こもれ日",     seat_type: "カウンター席", smoking: false, price: "¥400", capacity: 1 },
+  { image_url: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=2070&auto=format&fit=crop", name: "テラッツァ 代官山",   seat_type: "テラス席",     smoking: false, price: "¥600", capacity: 4 },
+  { image_url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop", name: "ブルーベル コーヒー", seat_type: "テーブル席",   smoking: false, price: "¥700", capacity: 2 },
+  { image_url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=2070&auto=format&fit=crop", name: "蔵前珈琲店",           seat_type: "カウンター席", smoking: false, price: "¥350", capacity: 1 },
+  { image_url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2070&auto=format&fit=crop", name: "カフェ・ロンド",       seat_type: "テーブル席",   smoking: true,  price: "¥900", capacity: 6 },
+  { image_url: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=2070&auto=format&fit=crop", name: "喫茶 しずく",          seat_type: "テーブル席",   smoking: false, price: "¥700", capacity: 2 },
+  { image_url: "https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?q=80&w=2070&auto=format&fit=crop", name: "アウトドアコーヒー 翠", seat_type: "テラス席",   smoking: true,  price: "¥500", capacity: 3 },
+  { image_url: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=2070&auto=format&fit=crop", name: "コーヒースタンド 朝陽", seat_type: "カウンター席", smoking: false, price: "¥450", capacity: 1 },
+] %>
+
+<% sale_seats = [
+  { image_url: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=2069&auto=format&fit=crop", name: "喫茶 ことり",       seat_type: "カウンター席", smoking: false, original_price: "¥600",   sale_price: "¥400", capacity: 1 },
+  { image_url: "https://images.unsplash.com/photo-1453614512568-c4024d13c247?q=80&w=2089&auto=format&fit=crop", name: "カフェ・ブランシュ", seat_type: "テーブル席",   smoking: false, original_price: "¥1,000", sale_price: "¥700", capacity: 4 },
+  { image_url: "https://images.unsplash.com/photo-1511081692775-05d0f180a065?q=80&w=2073&auto=format&fit=crop", name: "テラス珈琲 海風",   seat_type: "テラス席",     smoking: true,  original_price: "¥800",   sale_price: "¥550", capacity: 3 },
+  { image_url: "https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=2187&auto=format&fit=crop", name: "コーヒーラボ 鶯谷",  seat_type: "テーブル席",   smoking: false, original_price: "¥1,200", sale_price: "¥800", capacity: 6 },
+] %>
+
+
+
+
+<!-- 週末セールセクション -->
+<section class="sale-section">
+  <div class="sale-section__inner">
+    <div class="seats-header">
+      <h2 class="seats-heading">週末はさらにお得</h2>
+    </div>
+    <div class="sale-grid">
+      <% sale_seats.each do |s| %>
+        <%= render "sale_card", **s %>
+      <% end %>
+    </div>
+  </div>
+</section>
