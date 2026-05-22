@@ -1,0 +1,462 @@
+/* =====================================================
+   カフェ・ロンド 間取り図 CSS
+   ===================================================== */
+
+.rondo-map-container {
+  max-width: 980px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 1.5rem;
+  font-family: sans-serif;
+  color: #44403c;
+}
+
+.rondo-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1c1917;
+  margin-bottom: 0.5rem;
+}
+
+.rondo-subtitle {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #78716c;
+  margin-bottom: 2rem;
+}
+
+.rondo-legend-area {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f5f5f4;
+  font-size: 0.875rem;
+}
+
+.rondo-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* =====================================================
+   間取り図コンテナ（position: relative ベース）
+   ===================================================== */
+
+.rondo-floor-plan {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 460px;
+  margin: 0 auto 2.5rem auto;
+  background-color: #dfc5ad;
+  border-radius: 2rem;
+  box-sizing: border-box;
+}
+
+.rondo-inner-floor {
+  position: absolute;
+  left: 1%;
+  top: 2.5%;
+  width: 17%;
+  height: 95%;
+  background-color: #e2e1de;
+  border-radius: 1.75rem;
+}
+
+
+
+/* =====================================================
+   座席ラベル（共通）
+   ===================================================== */
+
+.rondo-seat-label {
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* =====================================================
+   座席テキスト（共通）
+   ===================================================== */
+
+.rondo-seat-num {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+}
+
+.rondo-seat-info {
+  font-size: 0.6875rem;
+  color: #6b6661;
+  margin-top: 0.125rem;
+  text-align: center;
+}
+
+.rondo-seat-radio {
+  display: none;
+}
+
+/* =====================================================
+   店内オブジェクト（共通）
+   ===================================================== */
+
+.rondo-floor-object {
+  position: absolute;
+  background-color: #fff1d8;
+  border: 1px solid #b5b4b1;
+  color: #000000;
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.floor-object-entrance {
+  background-color: #ff8000;
+  border-color: #a8a29e;
+  color: #44403c;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+.floor-object-wc {
+  background-color: #f1f6f1;
+  border-color: #a8a29e;
+  color: #528ac9;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+.rondo-reception {
+  background-color: #adcc3e;
+  border-color: #a8a29e;
+  color: #44403c;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+/* =====================================================
+   店内オブジェクト 配置
+   ===================================================== */
+
+.rondo-counter-top {
+  left: 53%;
+  top: 3%;
+  width: 43%;
+  height: 16%;
+}
+
+.rondo-entrance {
+  left: 72%;
+  top: 82%;
+  width: 24%;
+  height: 14%;
+}
+
+.rondo-wc {
+  left: 87%;
+  top: 54%;
+  width: 10%;
+  height: 16%;
+}
+
+/* =====================================================
+   各座席の配置（position: absolute）
+   ===================================================== */
+
+/* テラス席 */
+.rondo-seat-c1 { left: 3%;  top: 5%; width: 12%; height: 35%; }
+.rondo-seat-c2 { left: 3%;  top: 60%; width: 12%; height: 35%; }
+
+/* テーブル席（左列） */
+.rondo-seat-b1 { left: 20%; top: 14%; width: 27%; height: 15%; }
+.rondo-seat-b2 { left: 20%; top: 43%; width: 27%; height: 15%; }
+.rondo-seat-b3 { left: 20%; top: 72%; width: 27%; height: 15%; }
+
+/* テーブル席（右・大） */
+.rondo-seat-b4 { left: 53%; top: 54%; width: 24%; height: 15%; }
+
+/* カウンター前の単独席 */
+.rondo-seat-a1 { left: 53%; top: 22%; width: 7%; height: 17%; }
+.rondo-seat-a2 { left: 62%; top: 22%; width: 7%; height: 17%; }
+.rondo-seat-a3 { left: 71%; top: 22%; width: 7%; height: 17%; }
+.rondo-seat-a4 { left: 80%; top: 22%; width: 7%; height: 17%; }
+.rondo-seat-a5 { left: 89%; top: 22%; width: 7%; height: 17%; }
+
+.rondo-reception { left: 53%; top: 85%; width: 12%; height: 10%; }
+
+/* =====================================================
+   座席ボックス（各座席ごとに個別定義）
+   =====================================================
+   ※ position: absolute で座席サイズは親ラベルが決めるため
+     各ボックスは width: 100%; height: 100% で親を埋める
+   ===================================================== */
+
+/* テラス席 C-1 */
+.rondo-box-c1 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* テラス席 C-2 */
+.rondo-box-c2 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* テーブル席 B-1 */
+.rondo-box-b1 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* テーブル席 B-2 */
+.rondo-box-b2 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* テーブル席 B-3 */
+.rondo-box-b3 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* テーブル席 B-4 */
+.rondo-box-b4 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* カウンター前 A-1 */
+.rondo-box-a1 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* カウンター前 A-2 */
+.rondo-box-a2 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* カウンター前 A-3 */
+.rondo-box-a3 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* カウンター前 A-4 */
+.rondo-box-a4 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* カウンター前 A-5 */
+.rondo-box-a5 {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+/* =====================================================
+   選択状態（radio:checked）
+   ===================================================== */
+
+.rondo-seat-radio:checked + .rondo-box-c1,
+.rondo-seat-radio:checked + .rondo-box-c2,
+.rondo-seat-radio:checked + .rondo-box-b1,
+.rondo-seat-radio:checked + .rondo-box-b2,
+.rondo-seat-radio:checked + .rondo-box-b3,
+.rondo-seat-radio:checked + .rondo-box-b4,
+.rondo-seat-radio:checked + .rondo-box-a1,
+.rondo-seat-radio:checked + .rondo-box-a2,
+.rondo-seat-radio:checked + .rondo-box-a3,
+.rondo-seat-radio:checked + .rondo-box-a4,
+.rondo-seat-radio:checked + .rondo-box-a5 {
+  background-color: #78350f;
+  border-color: #78350f;
+  box-shadow: 0 4px 12px rgba(120, 53, 15, 0.3);
+}
+
+.rondo-seat-radio:checked + .rondo-box-c1 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-c1 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-c2 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-c2 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-b1 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-b1 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-b2 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-b2 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-b3 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-b3 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-b4 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-b4 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-a1 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-a1 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-a2 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-a2 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-a3 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-a3 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-a4 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-a4 .rondo-seat-info,
+.rondo-seat-radio:checked + .rondo-box-a5 .rondo-seat-num,
+.rondo-seat-radio:checked + .rondo-box-a5 .rondo-seat-info {
+  color: #ffffff;
+}
+
+/* =====================================================
+   予約手続きボタン
+   ===================================================== */
+
+.rondo-booking-area {
+  text-align: center;
+}
+
+.rondo-btn-booking {
+  background-color: #78350f;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  padding: 1rem 3rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.rondo-btn-booking:hover {
+  background-color: #451a03;
+}
