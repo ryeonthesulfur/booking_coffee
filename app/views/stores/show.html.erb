@@ -1,306 +1,40 @@
-<style>
-  /* 全体のレイアウト */
-  .shop-map-container {
-    max-width: 950px;
-    margin: 2rem auto;
-    padding: 2.5rem;
-    background-color: #ffffff;
-    border: 1px solid #e7e5e4; /* stone-200 */
-    border-radius: 1.5rem;
-    font-family: sans-serif;
-    color: #44403c;
-  }
-
-  .shop-title {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1c1917;
-    margin-bottom: 0.5rem;
-  }
-
-  .shop-subtitle {
-    text-align: center;
-    font-size: 0.875rem;
-    color: #78716c;
-    margin-bottom: 2rem;
-  }
-
-  /* 凡例（ステータス説明） */
-  .legend-area {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #f5f5f4;
-    font-size: 0.875rem;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  /* ─── 蔵前喫茶店 間取り図（12列×5行のGrid構造） ─── */
-  .cafe-floor-plan {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(5, 75px);
-    gap: 0.75rem;
-    max-width: 850px;
-    margin: 0 auto 2.5rem auto;
-    padding: 2rem;
-    background-color: #e2e1de; /* 画像の淡いグレー背景を再現 */
-    border-radius: 2rem;       /* 画像の丸みを帯びた外枠 */
-    border: 1px solid #c1c0bd;
-    position: relative;
-    box-sizing: border-box;
-  }
-
-  /* 座席ラベル・ボタンの基本スタイル */
-  .seat-label {
-    display: block;
-    cursor: pointer;
-  }
-  .seat-box {
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    border: 1px solid #b5b4b1;
-    border-radius: 1rem; /* 画像の角丸シートを再現 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
-    user-select: none;
-    box-sizing: border-box;
-    padding: 0.25rem;
-  }
-  .seat-num {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #000000;
-  }
-  .seat-info {
-    font-size: 0.6875rem;
-    color: #78716c;
-    margin-top: 0.125rem;
-    text-align: center;
-  }
-
-  /* ラジオボタン連動のエフェクト */
-  .seat-radio {
-    display: none;
-  }
-  .seat-radio:checked + .seat-box {
-    background-color: #78350f; /* 喫茶風アンバー */
-    border-color: #78350f;
-    box-shadow: 0 4px 12px rgba(120, 53, 15, 0.3);
-  }
-  .seat-radio:checked + .seat-box .seat-num,
-  .seat-radio:checked + .seat-box .seat-info {
-    color: #ffffff;
-  }
-
-  /* 予約済み（満席）用スタイル */
-  .seat-box.disabled {
-    background-color: #d6d3d1;
-    border-color: #c4c1be;
-    cursor: not-allowed;
-  }
-  .seat-box.disabled .seat-num {
-    color: #a8a29e;
-  }
-
-  /* ─── 店内オブジェクト・固定壁の装飾 ─── */
-  .floor-object {
-    background-color: #ffffff;
-    border: 1px solid #b5b4b1;
-    color: #000000;
-    font-size: 0.875rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 1rem;
-    text-align: center;
-    box-sizing: border-box;
-    font-weight: 500;
-  }
-
-  /* ─── 画像に基づく各パーツの絶対座標配置 ─── */
-  
-  /* 左側カウンターテーブル（縦長） */
-  .object-counter-left {
-    grid-column: 1;
-    grid-row: 1 / span 4;
-  }
-  /* 下側カウンターテーブル（横長） */
-  .object-counter-bottom {
-    grid-column: 4 / span 6;
-    grid-row: 5;
-  }
-
-  /* カウンター席（単独席）の配置 */
-  .seat-a5 { grid-column: 2; grid-row: 1; }
-  .seat-a6 { grid-column: 2; grid-row: 2; }
-  .seat-a7 { grid-column: 2; grid-row: 3; }
-
-  .seat-a1 { grid-column: 4; grid-row: 4; }
-  .seat-a2 { grid-column: 5; grid-row: 4; }
-  .seat-a3 { grid-column: 7; grid-row: 4; }
-  .seat-a4 { grid-column: 8; grid-row: 4; }
-
-  /* 奥のテーブル席 3卓（seedデータのB-1〜B-3にマッピング） */
-  .seat-b1 { grid-column: 5; grid-row: 1 / span 2; } /* 左のテーブル席 */
-  .seat-b2 { grid-column: 8; grid-row: 1 / span 2; } /* 中央のテーブル席 */
-  .seat-b3 { grid-column: 11; grid-row: 1 / span 2; } /* 右のテーブル席 */
-
-  /* 建物のインフラ（入り口・トイレ） */
-  .infra-entrance {
-    grid-column: 1;
-    grid-row: 5;
-  }
-  .infra-wc {
-    grid-column: 12;
-    grid-row: 5;
-  }
-
-  /* 予約手続きボタン */
-  .booking-action-area {
-    text-align: center;
-  }
-  .btn-booking {
-    background-color: #78350f;
-    color: #ffffff;
-    border: none;
-    font-weight: 700;
-    padding: 1rem 3rem;
-    font-size: 1rem;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-  .btn-booking:hover {
-    background-color: #451a03;
-  }
-</style>
-
-<div class="shop-map-container">
-  <div class="shop-title">蔵前喫茶店 - 座席選択</div>
-  <div class="shop-subtitle">ご希望の座席をタップして予約に進んでください。</div>
-
-  <div class="legend-area">
-    <div class="legend-item">
-      <div style="width: 16px; height: 16px; background: #fff; border: 1px solid #b5b4b1; border-radius: 4px;"></div>
-      <span>空席</span>
-    </div>
-    <div class="legend-item">
-      <div style="width: 16px; height: 16px; background: #78350f; border-radius: 4px;"></div>
-      <span>選択中</span>
-    </div>
-    <div class="legend-item">
-      <div style="width: 16px; height: 16px; background: #d6d3d1; border-radius: 4px;"></div>
-      <span>予約済み</span>
+<div class="store-hero" style="background-image: url('<%= @store.image_url %>');">
+  <div class="store-hero__overlay">
+    <div class="store-hero__inner">
+      <%= link_to "← 店舗一覧に戻る", root_path, class: "store-hero__back" %>
+      <div class="store-hero__badge-row">
+        <% if @store.smoking %>
+          <span class="store-hero__smoking store-hero__smoking--yes">喫煙可</span>
+        <% else %>
+          <span class="store-hero__smoking store-hero__smoking--non">禁煙</span>
+        <% end %>
+      </div>
+      <h1 class="store-hero__name"><%= @store.name %></h1>
     </div>
   </div>
-
-  <form action="#" method="get">
-    
-    <div class="cafe-floor-plan">
-      
-      <div class="floor-object object-counter-left">カ<br>ウ<br>ン<br>タ<br>┃<br>席</div>
-      <div class="floor-object object-counter-bottom">カウンター席</div>
-      <div class="floor-object infra-entrance">入り口</div>
-      <div class="floor-object infra-wc">W.C.</div>
-
-      <label class="seat-label seat-a5">
-        <input type="radio" name="seat_id" value="A-5" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">A-5</span>
-          <span class="seat-info">1名 / ¥550</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-a6">
-        <input type="radio" name="seat_id" value="A-6" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">A-6</span>
-          <span class="seat-info">1名 / ¥550</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-a7">
-        <input type="radio" name="seat_id" value="A-7" class="seat-radio" disabled>
-        <div class="seat-box disabled">
-          <span class="seat-num">A-7</span>
-          <span class="seat-info">満席</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-a1">
-        <input type="radio" name="seat_id" value="A-1" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">A-1</span>
-          <span class="seat-info">1名 / ¥550</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-a2">
-        <input type="radio" name="seat_id" value="A-2" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">A-2</span>
-          <span class="seat-info">1名 / ¥550</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-a3">
-        <input type="radio" name="seat_id" value="A-3" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">A-3</span>
-          <span class="seat-info">1名 / ¥550</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-a4">
-        <input type="radio" name="seat_id" value="A-4" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">A-4</span>
-          <span class="seat-info">1名 / ¥550</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-b1">
-        <input type="radio" name="seat_id" value="B-1" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">テーブル席<br>(B-1)</span>
-          <span class="seat-info">2名用<br>¥850/h</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-b2">
-        <input type="radio" name="seat_id" value="B-2" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">テーブル席<br>(B-2)</span>
-          <span class="seat-info">4名用<br>¥1,200/h</span>
-        </div>
-      </label>
-
-      <label class="seat-label seat-b3">
-        <input type="radio" name="seat_id" value="B-3" class="seat-radio">
-        <div class="seat-box">
-          <span class="seat-num">テーブル席<br>(B-3)</span>
-          <span class="seat-info">2名用<br>¥850/h</span>
-        </div>
-      </label>
-
-    </div>
-
-    <div class="booking-action-area">
-      <button type="submit" class="btn-booking">選択した席で予約を進める</button>
-    </div>
-
-  </form>
 </div>
+
+<main class="detail-main">
+  <div class="detail-inner">
+    <section class="detail-section">
+      <h2 class="detail-section__heading">ご利用可能な席タイプ</h2>
+      <div class="seat-type-grid">
+        <% @seats_summary.each do |type, count| %>
+          <div class="seat-type-card">
+            <span class="seat-type-card__name"><%= type %></span>
+            <span class="seat-type-card__count"><%= count %>席</span>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</main>
+
+
+<% if @store.name == "蔵前喫茶店" %>
+  <%= render "stores/kuramae_floor" %>
+<% elsif @store.name == "カフェ・ロンド" %>
+  <%= render "stores/rondo_floor" %>
+<% elsif @store.name == "喫茶むすび" %>
+  <%= render "stores/musubi_floor" %>
+<% end %>

@@ -1,0 +1,110 @@
+<% content_for :store_css do %>
+  <%= stylesheet_link_tag "store_floor_3" %>
+<% end %>
+
+<div class="musubi-map-container">
+  <div class="musubi-title">喫茶むすび - 座席選択</div>
+  <div class="musubi-subtitle">ご希望の座席をタップして予約に進んでください。</div>
+
+  <div class="musubi-legend-area">
+    <div class="musubi-legend-item">
+      <div style="width: 16px; height: 16px; background: #fff; border: 1px solid #b5b4b1; border-radius: 4px;"></div>
+      <span>空席</span>
+    </div>
+    <div class="musubi-legend-item">
+      <div style="width: 16px; height: 16px; background: #78350f; border-radius: 4px;"></div>
+      <span>選択中</span>
+    </div>
+    <div class="musubi-legend-item">
+      <div style="width: 16px; height: 16px; background: #d6d3d1; border-radius: 4px;"></div>
+      <span>予約済み</span>
+    </div>
+  </div>
+
+  <form action="#" method="get">
+    <div class="musubi-floor-plan">
+      <div class="musubi-inner-floor"></div>
+
+      <div class="musubi-floor-object musubi-reception">受付</div>
+      <div class="musubi-floor-object musubi-entrance">入り口</div>
+      <div class="musubi-floor-object musubi-wc">W.C.</div>
+
+      <label class="musubi-seat-label musubi-seat-c1">
+        <input type="radio" name="seat_id" value="C-1" class="musubi-seat-radio">
+        <div class="musubi-box-c1 musubi-circle">
+          <span class="musubi-seat-num">テラス</span>
+          <span class="musubi-seat-info">C-1 / 2名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-c2">
+        <input type="radio" name="seat_id" value="C-2" class="musubi-seat-radio">
+        <div class="musubi-box-c2 musubi-circle">
+          <span class="musubi-seat-num">テラス</span>
+          <span class="musubi-seat-info">C-2 / 2名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-c3">
+        <input type="radio" name="seat_id" value="C-3" class="musubi-seat-radio">
+        <div class="musubi-box-c3 musubi-circle">
+          <span class="musubi-seat-num">テラス</span>
+          <span class="musubi-seat-info">C-3 / 4名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-b1">
+        <input type="radio" name="seat_id" value="B-1" class="musubi-seat-radio">
+        <div class="musubi-box-b1">
+          <span class="musubi-seat-num">テーブル席</span>
+          <span class="musubi-seat-info">B-1 / 2名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-b3">
+        <input type="radio" name="seat_id" value="B-3" class="musubi-seat-radio">
+        <div class="musubi-box-b3">
+          <span class="musubi-seat-num">テーブル席</span>
+          <span class="musubi-seat-info">B-3 / 2名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-b5">
+        <input type="radio" name="seat_id" value="B-5" class="musubi-seat-radio">
+        <div class="musubi-box-b5">
+          <span class="musubi-seat-num">テーブル席</span>
+          <span class="musubi-seat-info">B-5 / 2名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-b2">
+        <input type="radio" name="seat_id" value="B-2" class="musubi-seat-radio">
+        <div class="musubi-box-b2">
+          <span class="musubi-seat-num">テーブル席</span>
+          <span class="musubi-seat-info">B-2 / 4名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-b4">
+        <input type="radio" name="seat_id" value="B-4" class="musubi-seat-radio">
+        <div class="musubi-box-b4">
+          <span class="musubi-seat-num">テーブル席</span>
+          <span class="musubi-seat-info">B-4 / 4名</span>
+        </div>
+      </label>
+
+      <label class="musubi-seat-label musubi-seat-b6">
+        <input type="radio" name="seat_id" value="B-6" class="musubi-seat-radio">
+        <div class="musubi-box-b6">
+          <span class="musubi-seat-num">テーブル席</span>
+          <span class="musubi-seat-info">B-6 / 4名</span>
+        </div>
+      </label>
+
+    </div>
+
+    <div class="musubi-booking-area">
+      <button type="submit" class="musubi-btn-booking">選択した席で予約を進める</button>
+    </div>
+  </form>
+</div>
