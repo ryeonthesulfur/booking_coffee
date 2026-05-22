@@ -1,0 +1,239 @@
+/* =====================================================
+   蔵前喫茶店 間取り図 CSS（position: absolute ベース）
+   ===================================================== */
+
+.shop-map-container {
+  max-width: 950px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 1.5rem;
+  font-family: sans-serif;
+  color: #44403c;
+}
+
+.shop-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1c1917;
+  margin-bottom: 0.5rem;
+}
+
+.shop-subtitle {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #78716c;
+  margin-bottom: 2rem;
+}
+
+/* =====================================================
+   凡例
+   ===================================================== */
+
+.legend-area {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f5f5f4;
+  font-size: 0.875rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* =====================================================
+   間取り図コンテナ（position: relative ベース）
+   ===================================================== */
+
+.cafe-floor-plan {
+  position: relative;
+  width: 100%;
+  max-width: 850px;
+  height: 480px;
+  margin: 0 auto 2.5rem auto;
+  background-color: #e2e1de;
+  border-radius: 2rem;
+  border: 1px solid #c1c0bd;
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   座席ラベル・ボックス
+   ===================================================== */
+
+.seat-label {
+  position: absolute;
+  cursor: pointer;
+}
+
+.seat-box {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #b5b4b1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+.seat-num {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+}
+
+.seat-info {
+  font-size: 0.6875rem;
+  color: #78716c;
+  margin-top: 0.125rem;
+  text-align: center;
+}
+
+.seat-radio {
+  display: none;
+}
+
+.seat-radio:checked + .seat-box {
+  background-color: #78350f;
+  border-color: #78350f;
+  box-shadow: 0 4px 12px rgba(120, 53, 15, 0.3);
+}
+
+.seat-radio:checked + .seat-box .seat-num,
+.seat-radio:checked + .seat-box .seat-info {
+  color: #ffffff;
+}
+
+.seat-box.disabled {
+  background-color: #d6d3d1;
+  border-color: #c4c1be;
+  cursor: not-allowed;
+}
+
+.seat-box.disabled .seat-num {
+  color: #a8a29e;
+}
+
+/* =====================================================
+   店内オブジェクト
+   ===================================================== */
+
+.floor-object {
+  position: absolute;
+  background-color: #fff1d8;
+  border: 1px solid #b5b4b1;
+  color: #000000;
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+  font-weight: 500;
+}
+
+.floor-object-entrance {
+  background-color: #ff8000;
+  border-color: #a8a29e;
+  color: #44403c;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+.floor-object-wc {
+  background-color: #f1f6f1;
+  border-color: #a8a29e;
+  color: #528ac9;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+.kuramae-reception {
+   background-color: #adcc3e;
+   border-color: #a8a29e;
+   color: #44403c;
+   font-size: 0.75rem;
+   padding: 0.25rem;
+}
+
+/* =====================================================
+   予約手続きボタン
+   ===================================================== */
+
+.booking-action-area {
+  text-align: center;
+}
+
+.btn-booking {
+  background-color: #78350f;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  padding: 1rem 3rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-booking:hover {
+  background-color: #451a03;
+}
+
+/* =====================================================
+   蔵前喫茶店 配置（position: absolute）
+   ===================================================== */
+
+/* 左縦カウンター */
+.object-counter-left { left: 1%;  top: 2%;  width: 7%;  height: 77%; }
+
+/* カウンター席（左縦列） */
+.seat-a5 { left: 10%; top: 5%;  width: 12%; height: 17%; }
+.seat-a6 { left: 10%; top: 31.5%; width: 12%; height: 17%; }
+.seat-a7 { left: 10%; top: 58%; width: 12%; height: 17%; }
+
+/* テーブル席 */
+.seat-b1 { left: 35%; top: 2%; width: 10%; height: 36%; }
+.seat-b2 { left: 55%; top: 2%; width: 10%; height: 36%; }
+.seat-b3 { left: 75%; top: 2%; width: 10%; height: 36%; }
+
+/* カウンター席（下横列） */
+.counter-seats-row {
+  position: absolute;
+  left: 35%;
+  top: 62%;
+  width: 50%;
+  height: 17%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.counter-seats-row .seat-label {
+  position: static;
+  flex: 1;
+  max-width: 80px;
+}
+
+/* 下部インフラ */
+.infra-entrance        { left: 1%;  top: 82%; width: 7%;  height: 14%; }
+.object-counter-bottom { left: 35%; top: 82%; width: 50%; height: 14%; }
+.infra-wc              { left: 87%; top: 82%; width: 10%;  height: 14%; }
+.kuramae-reception     { left: 22%; top: 82%; width: 12%; height: 14%; }
