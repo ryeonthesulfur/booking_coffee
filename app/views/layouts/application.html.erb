@@ -44,6 +44,28 @@
         </div>
       <% end %>
     </div>
+
+    <!-- ナビゲーション -->
+<nav class="top-nav">
+  <div class="top-nav__inner">
+    <div class="top-nav__left">
+        <%= link_to "booking ☕️ coffee", root_path, class: "top-nav__logo"%>
+      <span class="top-nav__tagline">今日の気分にぴったりの席を見つけましょう</span>
+    </div>
+    <div class="top-nav__actions">
+      <span class="top-nav__flag">🇯🇵</span>
+      <% if user_signed_in? %>
+        <%= link_to "予約一覧", '#', class: "top-nav__link" %>
+        <%= link_to current_user.name, edit_user_registration_path, class: "top-nav__link" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "top-nav__btn" %>
+      <% else %>
+        <%= link_to "登録", new_user_registration_path, class: "top-nav__btn" %>
+        <%= link_to "ログイン", new_user_session_path, class: "top-nav__btn" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
     <%= yield %>
   </body>
 </html>
