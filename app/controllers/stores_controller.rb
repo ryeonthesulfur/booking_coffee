@@ -1,4 +1,6 @@
 class StoresController < ApplicationController
+  before_action :authenticate_user!, except: [ :index, :show ]
+
   def index
     # 全店舗を座席情報と一緒に取得
     @stores = Store.includes(:seats).all
