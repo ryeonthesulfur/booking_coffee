@@ -58,7 +58,7 @@ production:
   primary: &primary_production
     <<: *default
     database: booking_coffee_production
-    username: booking_coffee
+    username: Harry
     password: <%= ENV["BOOKING_COFFEE_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
