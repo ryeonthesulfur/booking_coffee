@@ -1,0 +1,88 @@
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+  <%= javascript_include_tag "seats_index" %>
+<% end %>
+
+
+<div class="header-reservation-form">
+  <div class="header-reservation-form__inner">
+    <%= link_to "← 席一覧に戻る", store_path(@store.id), class: "back-link" %>
+    <h1 class="header-reservation-form__title"><%= @store.name %></h1>
+  </div>
+</div>
+
+<main class="detail-reservation" style="background-image: url(<%= @store.image_url %>)">
+  <div class="detail-inner-reservation">
+
+    <div class="seat-reservation-card">
+      <span class="seat-reservation-card__number"><%= @seat.seat_number %></span>
+      <h2 class="seat-reservation-card__type"><%= @seat.seat_type %></h2>
+      <div class="seat-reservation-card__meta">
+        <div class="seat-reservation-card__meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          定員 <%= @seat.capacity %>名まで
+        </div>
+        <div class="seat-reservation-card__meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span class="seat-reservation-card__price">¥<%= @seat.price_per_hour %></span>
+          <span>/ 時間</span>
+        </div>
+        <div class="seat-reservation-card__meta-item">
+          <% if @store.smoking %>
+            <span class="seat-reservation-card__smoking seat-reservation-card__smoking--yes">喫煙可</span>
+          <% else %>
+            <span class="seat-reservation-card__smoking seat-reservation-card__smoking--non">禁煙</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="reservation-form-card">
+      <h2 class="reservation-form-card__heading">予約情報を入力</h2>
+
+      <% unless user_signed_in? %>
+        <div class="login-prompt">
+          予約するには <%= link_to "ログイン", new_user_session_path %> が必要です。
+        </div>
+      <% else %>
+        <%= form_with model: @reservation, url: confirm_store_seat_reservations_path(@store, @seat), local: true, data: { turbo: false } do |f| %>
+          <% if @reservation.errors.any? %>
+            <div class="form-errors">
+              <% @reservation.errors.full_messages.each do |message| %>
+                <p><%= message %></p>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= f.label :start_time, "予約日時" %>
+            <%= f.text_field :start_time, id: "reservation-date-input", placeholder: "日時を選択してください", readonly: true, class: "form-input" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :num_people, "人数" %>
+            <%= f.select :num_people,
+                  (1..@seat.capacity).map { |n| ["#{n}名", n] },
+                  { prompt: "人数を選択" },
+                  { value: '', class: "num-people-input", required: true } %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :phone_number, "電話番号" %>
+            <%= f.text_field :phone_number, placeholder: "09012345678（ハイフンなし）", class: "form-input", required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :notes, "備考（任意）" %>
+            <%= f.text_area :notes, rows: 3, placeholder: "ご要望等があればご記入ください", class: "form-input form-input--textarea" %>
+          </div>
+
+          <%= f.submit "予約確認画面へ進む", class: "reservation-submit-btn" %>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+</main>

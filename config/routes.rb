@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   }
 
   resources :stores, only: [ :index, :show ] do
-    resources :seats, only: [ :index, :show ] do
+    resources :seats, only: [ :show ] do
+      resources :reservations, only: [ :create ] do
+          collection do
+            post "confirm"
+          end
+      end
     end
   end
 end

@@ -30,7 +30,7 @@ function getMaxDate() {
 document.addEventListener('turbo:load', function () {
 
   // ── Flatpickr（日時選択カレンダー）の初期化 ──
-  const dateInput = document.getElementById('date-input');
+  const dateInput = document.getElementById('date-input') || document.getElementById('reservation-date-input'); // 予約日時のinput要素
   if (dateInput) {  // 他のページでこのidが存在しない場合に備えてガード
     flatpickr(dateInput, {
       enableTime: true,               // 時刻も選択できるようにする
