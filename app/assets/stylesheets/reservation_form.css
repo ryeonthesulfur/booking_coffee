@@ -1,0 +1,261 @@
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   予約フォーム全体のスタイル
+   ===================================================== */
+
+.header-reservation-form {
+  background-color: #1c1917;
+  padding: 0.875rem 1.5rem;
+}
+
+.header-reservation-form__inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-reservation-form__title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+.detail-reservation {
+  background-color: #fafaf9;
+  height: 100vh;
+  padding: 3rem 1.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.detail-inner-reservation {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+
+/* =====================================================
+   座席予約カード (seats#show 上部)
+   ===================================================== */
+
+.seat-reservation-card {
+  background: #ffffffd2;
+  border: 1px solid #e7e5e4;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  width: 50%;
+  top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.seat-reservation-card__number {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #78716c;
+  background: #f5f5f4;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  margin-bottom: 0.625rem;
+}
+
+.seat-reservation-card__type {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #1c1917;
+  margin: 0 0 1.5rem;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.seat-reservation-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.seat-reservation-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #57534e;
+}
+
+.seat-reservation-card__price {
+  font-size: 1.375rem;
+  font-weight: 900;
+  color: #92400e;
+}
+
+
+.seat-reservation-card__smoking {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+
+
+.seat-reservation-card__smoking--non {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.seat-reservation-card__smoking--yes {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+
+
+
+
+
+
+/* =====================================================
+   予約フォームカード (seats#show 下部)
+   ===================================================== */
+
+.reservation-form-card {
+  background: #ffffffcd;
+  border: 1px solid #e7e5e4;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.reservation-form-card__heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1c1917;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e7e5e4;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #44403c;
+  margin-bottom: 0.375rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d6d3d1;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+select:invalid,
+select option[value=""] {
+  color: #6e6e6eea;
+}
+
+select option:not([value=""]) {
+  color: #1c1917; /* 濃い色 */
+}
+
+.num-people-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d6d3d1;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #000000c9;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.form-input:focus {
+  border-color: #92400e;
+  box-shadow: 0 0 0 3px rgba(146, 64, 14, 0.1);
+}
+
+.form-input--textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-errors {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.form-errors p {
+  margin: 0.2rem 0;
+}
+
+.reservation-submit-btn {
+  width: 100%;
+  background-color: #92400e;
+  color: #ffffff;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.reservation-submit-btn:hover {
+  background-color: #78350f;
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 1.5rem;
+  background: #fef3c7;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  color: #92400e;
+}
+
+.login-prompt a {
+  color: #92400e;
+  font-weight: 700;
+}
