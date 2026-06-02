@@ -3,11 +3,14 @@
 function getNextHalfHour() {
   const now = new Date();
   if (now.getMinutes() < 30) {
-    now.setMinutes(30, 0, 0);   // 分・秒・ミリ秒をセット
+    // 例：14:10 → 分を30に固定して 14:30 にする（秒・ミリ秒は0にリセット）
+    now.setMinutes(30, 0, 0);
   } else {
-    now.setHours(now.getHours() + 1, 0, 0, 0); // 時・分・秒・ミリ秒をセット
+    // 例：14:45 → 時を+1して 15:00 にする（分・秒・ミリ秒はすべて0にリセット）
+    now.setHours(now.getHours() + 1, 0, 0, 0);
   }
-  return now;
+  return now;   //// この時点での表示例 「Wed Jun 12 2024 14:30:00 GMT+0900」 (日本標準時)
+
 }
 
 // getNextHalfHour() の結果を "HH:mm" 形式の文字列にして返す
@@ -15,14 +18,18 @@ function getNextHalfHour() {
 // 例：{ hour: 9, min: 30 } → "09:30"
 function getNextHalfHourString() {
   const d = getNextHalfHour();
+  // getHours()で「時」、getMinutes()で「分」を取得
+  // String()で数値を文字列に変換し、padStart(2, '0')で、この文字列が2文字未満なら、先頭に '0' を付けて2文字にしてください」という意味。1桁なら先頭に0を付ける
+  // 例：9 → "09"、14 → "14"
+  // テンプレートリテラル（`${}`）で "09:30" のような文字列を組み立てる
   return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-  // padStart(2, '0')：1桁の数字を "9" → "09" のようにゼロ埋めする
 }
 
 // 予約できる最大日付（今日から14日後）を返す
+// 例：今日が6月1日なら、6月15日が最大選択日になる
 function getMaxDate() {
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 14);
+  const maxDate = new Date();                      // 今日の日付を取得し、「maxDate」に格納
+  maxDate.setDate(maxDate.getDate() + 14);         // 今日の日付を「getDate()」で取り出し、14を足す。そしてセットする。
   return maxDate;
 }
 
@@ -34,12 +41,14 @@ document.addEventListener('turbo:load', function () {
   if (dateInput) {  // 他のページでこのidが存在しない場合に備えてガード
     flatpickr(dateInput, {
       enableTime: true,               // 時刻も選択できるようにする
-      dateFormat: "Y年m月d日 H:i〜",  // 表示形式（例：2026年5月17日 14:30〜）
+      dateFormat: "Y-m-d H:i〜",        // サーバーに送る表示形式（例：2026年5月17日 14:30〜）
+      altInput: true,                 // 表示用の別inputを使う
+      altFormat: "Y年m月d日 H:i〜",     // ユーザーに見せる形式
       locale: "ja",                   // カレンダーを日本語表示にする
       minDate: "today",               // 今日より前の日付は選択不可
       maxDate: getMaxDate(),          // 来週の土曜日まで選択可能
-      defaultDate: getNextHalfHour(), // 初期表示を「次の30分スロット」にする
-      minTime: getNextHalfHourString(), // 今日の場合の選択可能な最小時刻
+      defaultDate: getNextHalfHour(), // 初期表示を「次の30分スロット」にした時刻
+      minTime: getNextHalfHourString(), // 今日の場合の選択可能な直近時刻の「HH:mm」形式
       time_24hr: true,                // 24時間表記（AM/PMではなく）
       minuteIncrement: 30,            // 分の選択を30分刻みにする
       onChange: function (selectedDates, dateStr, instance) {
@@ -52,6 +61,7 @@ document.addEventListener('turbo:load', function () {
       }
     });
   }
+  
 
   // ── カルーセル ──
   const track = document.getElementById('carousel-track');
