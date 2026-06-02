@@ -32,9 +32,9 @@
 
 
 <% if @store.name == "蔵前喫茶店" %>
-  <%= render "stores/kuramae_floor" %>
+  <%= render "stores/kuramae_floor", confirm_mode: false %>
 <% elsif @store.name == "カフェ・ロンド" %>
-  <%= render "stores/rondo_floor" %>
+  <%= render "stores/rondo_floor", confirm_mode: false %>
 <% elsif @store.name == "喫茶むすび" %>
-  <%= render "stores/musubi_floor" %>
+  <%= render "stores/musubi_floor", confirm_mode: false %>
 <% end %>
