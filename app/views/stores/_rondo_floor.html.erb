@@ -3,8 +3,15 @@
 <% end %>
 
 <div class="rondo-map-container">
-  <div class="rondo-title">カフェ・ロンド - 座席選択</div>
+  <% if confirm_mode %>
+    <div class="rondo-title">カフェ・ロンド - 座席確認</div>
+  <% else %>
+    <div class="rondo-title">カフェ・ロンド - 座席選択</div>
+  <% end %>
+
+<% unless confirm_mode %>
   <div class="rondo-subtitle">ご希望の座席をタップして予約に進んでください。</div>
+<% end %>
 
   <div class="rondo-legend-area">
     <div class="rondo-legend-item">
@@ -120,8 +127,10 @@
 
     </div>
 
+<% unless confirm_mode %>
     <div class="booking-action-area">
       <button type="button" data-store-id="<%= @store.id %>" class="btn-booking">選択した席で予約を進める</button>
     </div>
+<% end %>
 
 </div>
