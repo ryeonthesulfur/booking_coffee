@@ -1,0 +1,72 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "confirm" %>
+<% end %>
+
+<div class="confirm-seat-container">
+
+<div id="confirmed-seat" data-seat-number="<%= @seat.seat_number %>"></div>
+
+<% if @store.name == "蔵前喫茶店" %>
+  <%= render "stores/kuramae_floor", confirm_mode: true %>
+<% elsif @store.name == "カフェ・ロンド" %>
+  <%= render "stores/rondo_floor", confirm_mode: true %>
+<% elsif @store.name == "喫茶むすび" %>
+  <%= render "stores/musubi_floor", confirm_mode: true %>
+<% end %>
+</div>
+
+
+<div class="confirm-container" style="background-image: url('<%= asset_path("wallPaper_1.jpg") %>'); background-size: cover; background-position: center;">
+
+<div class="confirm-form">
+
+  <span class="confirm-title">予約確認</span>
+  <span class="confirm-subtitle">-------------------------------------------------------------------</span>
+
+<div class="confirm-content">
+    <label class="confirm-label">店舗名</label>
+<span class="confirm-store-name"><%= @store.name %></span>
+</div>
+
+<div class="confirm-content">
+    <label class="confirm-label">座席番号</label>
+<span class="confirm-seat-number"><%= @seat.seat_number %></span>
+</div>
+
+<div class="confirm-content">
+    <label class="confirm-label">予約時間</label>
+<span class="confirm-start-time"><%= @reservation.start_time.strftime("%Y/%m/%d %H:%M〜") %></span>
+</div>
+
+<div class="confirm-content">
+    <label class="confirm-label">人数</label>
+<span class="confirm-num-people"><%= @reservation.num_people %>名</span>
+</div>
+
+<div class="confirm-content">
+    <label class="confirm-label">電話番号</label>
+<span class="confirm-phone-number"><%= @reservation.phone_number %></span>
+</div>
+
+<div class="confirm-content">
+    <label class="confirm-label">備考</label>
+<span class="confirm-notes"><%= @reservation.notes %></span>
+</div>
+
+<div class="confirm-content">
+  <%= link_to "予約を確定する", store_seat_reservations_path(@store, @seat), method: :post, class: "btn-confirm" %>
+</div>
+
+<div class="confirm-content">
+  <%= link_to "予約内容を修正する", store_seat_path(@store, @seat), class: "btn-edit" %>
+</div>
+
+</div>
+
+
+
+</div>
+
+
+   
+    
