@@ -2,7 +2,7 @@ class SeatsController < ApplicationController
   def show
     @seat = Seat.find_by(seat_number: params[:id], store_id: params[:store_id])
     @reservation = Reservation.new
-    @store = @seat.store
+    @store = Store.find(params[:store_id])
   end
 end
 
