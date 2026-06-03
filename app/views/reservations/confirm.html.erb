@@ -66,7 +66,7 @@
 <% end %>
 
 <div class="confirm-content">
-  <%= link_to "予約内容を修正する", store_seat_path(@store, @seat), class: "btn-edit" %>
+  <%= link_to "予約内容を修正する", store_seat_path(@store, @seat.seat_number), class: "btn-edit", data: { turbo: false } %>
 </div>
 
 </div>
