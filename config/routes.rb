@@ -12,6 +12,9 @@ Rails.application.routes.draw do
           collection do
             post "confirm"
           end
+          member do
+            get "complete"
+          end
       end
     end
   end

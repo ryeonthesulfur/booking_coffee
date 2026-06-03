@@ -8,10 +8,28 @@ class ReservationsController < ApplicationController
   end
 
 
+  def create
+    @store = Store.find(params[:store_id])
+    @seat = Seat.find(params[:seat_id])
+    @reservation = Reservation.new(reservation_params)
+    if @reservation.save
+      redirect_to complete_store_seat_reservation_path(@store, @seat, @reservation)
+    else
+      render "seats/show", status: :unprocessable_entity
+    end
+  end
+
+
+  def complete
+    @store = Store.find(params[:store_id])
+    @seat = Seat.find(params[:seat_id])
+    @reservation = Reservation.find(params[:id])
+  end
+
     private
 
   def reservation_params
-    params.require(:reservation).permit(:start_time, :num_people, :phone_number, :notes)
+    params.require(:reservation).permit(:start_time, :num_people, :phone_number, :notes).merge(user_id: current_user.id, seat_id: params[:seat_id])
   end
 end
 
