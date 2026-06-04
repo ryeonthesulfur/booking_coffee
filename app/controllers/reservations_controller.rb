@@ -36,6 +36,16 @@ class ReservationsController < ApplicationController
     @seat = @reservation.seat
   end
 
+  def destroy
+    @reservation = Reservation.find(params[:id])
+    if @reservation.user_id == current_user.id
+      @reservation.destroy
+      redirect_to reservations_path, notice: "予約をキャンセルしました。"
+    else
+      redirect_to reservations_path, alert: "予約のキャンセルに失敗しました。"
+    end
+  end
+
 
     private
 
