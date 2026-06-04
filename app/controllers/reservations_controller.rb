@@ -30,6 +30,13 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
   end
 
+  def show
+    @reservation = Reservation.includes(seat: :store).find(params[:id])
+    @store = @reservation.seat.store
+    @seat = @reservation.seat
+  end
+
+
     private
 
   def reservation_params
