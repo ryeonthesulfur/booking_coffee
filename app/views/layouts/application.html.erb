@@ -28,6 +28,7 @@
     <%= stylesheet_link_tag "reservation_form" %>
     <%= stylesheet_link_tag "confirm" %>
     <%= stylesheet_link_tag "complete" %>
+    <%= stylesheet_link_tag "reservation_info" %>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -58,7 +59,7 @@
     <div class="top-nav__actions">
       <span class="top-nav__flag">🇯🇵</span>
       <% if user_signed_in? %>
-        <%= link_to "予約一覧", '#', class: "top-nav__link" %>
+        <%= link_to "予約一覧", reservations_path, class: "top-nav__link" %>
         <%= link_to current_user.name, edit_user_registration_path, class: "top-nav__link" %>
         <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "top-nav__btn" %>
       <% else %>
