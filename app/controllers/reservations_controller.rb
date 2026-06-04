@@ -1,4 +1,8 @@
 class ReservationsController < ApplicationController
+  def index
+    @reservations = Reservation.where(user_id: current_user.id).includes(seat: :store)
+    @user = current_user
+  end
   def confirm
     @store = Store.find(params[:store_id])
     @seat = Seat.find(params[:seat_id])
