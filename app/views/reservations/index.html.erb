@@ -1,0 +1,31 @@
+<main class="reservation-list-main" style="background-image: url('<%= asset_path("wallPaper_2.jpg") %>'); background-size: cover; background-position: center; background-attachment: fixed; box-shadow: inset 0 0 0 1000px rgba(81, 81, 81, 0.5);">
+  <div class="reservation-list-inner">
+
+    <h1 class="page-heading"><%= @user.name %> 様のご予約一覧</h1>
+
+    <% if @reservations.empty? %>
+      <div class="empty-state">
+        <p>まだ予約がありません。</p>
+        <%= link_to "店舗を探す", root_path, class: "reservation-card__link" %>
+      </div>
+    <% else %>
+      <div class="reservation-list">
+        <% @reservations.each do |r| %>
+          <div class="reservation-card">
+
+            <div class="reservation-card__info">
+              <p class="reservation-card__store"><%= r.seat.store.name %></p>
+              <p class="reservation-card__meta">
+                <%= r.seat.seat_type %> (<%= r.seat.seat_number %>) ／
+                <%= r.start_time.strftime("%Y年%m月%d日 %H:%M") %>〜 ／
+                <%= r.num_people %>名
+              </p>
+            </div>
+
+            <%= link_to "間取り図", "#", class: "reservation-card__link" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</main>
