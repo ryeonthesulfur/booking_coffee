@@ -33,7 +33,9 @@
 .empty-state {
   text-align: center;
   padding: 4rem 0;
-  color: #78716c;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-family: 'Noto Serif JP', serif;;
 }
 
 .empty-state p {
@@ -84,11 +86,27 @@
   transition: background-color 0.2s;
 }
 
+
+
 .reservation-card__link:hover {
   background-color: #92400e;
 }
 
+.reservation-card__link_2 {
+  background: #ea6600;
+  color: #ffffff;
+  padding: 0.5rem 1.125rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
 
+.reservation-card__link_2:hover {
+  background-color: #92400e;
+}
 
 
 /* =====================================================

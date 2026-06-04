@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reservations, only: [ :index, :show ]
+  resources :reservations, only: [ :index, :show, :destroy ]
 end
 
 

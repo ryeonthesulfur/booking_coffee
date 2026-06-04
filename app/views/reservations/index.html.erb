@@ -6,7 +6,7 @@
     <% if @reservations.empty? %>
       <div class="empty-state">
         <p>まだ予約がありません。</p>
-        <%= link_to "店舗を探す", root_path, class: "reservation-card__link" %>
+        <%= link_to "店舗を探す", root_path, class: "reservation-card__link_2" %>
       </div>
     <% else %>
       <div class="reservation-list">
@@ -22,7 +22,7 @@
               </p>
             </div>
 
-            <%= link_to "間取り図", "#", class: "reservation-card__link" %>
+            <%= link_to "間取り図", reservation_path(r), class: "reservation-card__link" %>
           </div>
         <% end %>
       </div>
