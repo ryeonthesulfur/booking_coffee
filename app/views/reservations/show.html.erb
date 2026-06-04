@@ -1,0 +1,58 @@
+<main class="reservation-detail-main" style="background-image: url('<%= asset_path("wallPaper_2.jpg") %>'); background-size: cover; background-position: center; background-attachment: fixed; box-shadow: inset 0 0 0 1000px rgba(81, 81, 81, 0.5);">
+  <div class="reservation-detail-inner">
+    <%= link_to "← 予約一覧に戻る", reservations_path, class: "reservation-back-link" %>
+
+    <h1 class="detail-page-heading" style="margin-top: 1.5rem;">予約詳細</h1>
+
+    <div class="reservation-detail">
+      <div class="reservation-detail__row">
+        <span class="reservation-detail__label">店舗</span>
+        <span class="reservation-detail__value"><%= @reservation.seat.store.name %></span>
+      </div>
+      <div class="reservation-detail__row">
+        <span class="reservation-detail__label">席番号</span>
+        <span class="reservation-detail__value"><%= @reservation.seat.seat_number %></span>
+      </div>
+      <div class="reservation-detail__row">
+        <span class="reservation-detail__label">席タイプ</span>
+        <span class="reservation-detail__value"><%= @reservation.seat.seat_type %></span>
+      </div>
+      <div class="reservation-detail__row">
+        <span class="reservation-detail__label">予約日時</span>
+        <span class="reservation-detail__value"><%= @reservation.start_time.strftime("%Y年%m月%d日 %H:%M") %>〜</span>
+      </div>
+      <div class="reservation-detail__row">
+        <span class="reservation-detail__label">人数</span>
+        <span class="reservation-detail__value"><%= @reservation.num_people %>名</span>
+      </div>
+      <div class="reservation-detail__row">
+        <span class="reservation-detail__label">電話番号</span>
+        <span class="reservation-detail__value"><%= @reservation.phone_number %></span>
+      </div>
+      <% if @reservation.notes.present? %>
+        <div class="reservation-detail__row">
+          <span class="reservation-detail__label">備考</span>
+          <span class="reservation-detail__value"><%= @reservation.notes %></span>
+        </div>
+      <% end %>
+    </div>
+
+
+<div class="confirm-seat-container">
+  <div id="confirmed-seat" data-seat-number="<%= @seat.seat_number %>"></div>
+  <% if @store.name == "蔵前喫茶店" %>
+    <%= render "stores/kuramae_floor", confirm_mode: true %>
+  <% elsif @store.name == "カフェ・ロンド" %>
+    <%= render "stores/rondo_floor", confirm_mode: true %>
+  <% elsif @store.name == "喫茶むすび" %>
+    <%= render "stores/musubi_floor", confirm_mode: true %>
+  <% end %>
+</div>
+
+    <%= button_to "この予約をキャンセルする",
+          reservation_path(@reservation),
+          method: :delete,
+          data: { turbo_confirm: "本当にキャンセルしますか？" },
+          class: "cancel-btn" %>
+  </div>
+</main>
