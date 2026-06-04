@@ -1,0 +1,13 @@
+<div class="complete-container">
+
+  <div class="complete-card">
+    <h1 class="complete-title">予約が完了しました</h1>
+    <p class="complete-message"><%= @store.name %> の <%= @seat.seat_number %> を予約しました。</p>
+
+    <div class="complete-actions">
+      <%= link_to "予約履歴ページはこちら", reservations_path, class: "btn-complete" %>
+      <%= link_to "トップページに戻る", root_path, class: "btn-complete btn-complete--secondary" %>
+    </div>
+  </div>
+
+</div>
