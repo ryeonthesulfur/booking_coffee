@@ -2,15 +2,15 @@
   <%= stylesheet_link_tag "store_floor_2" %>
 <% end %>
 
-<div class="shop-map-container">
+<div class="floor-map-container">
   <% if confirm_mode %>
-  <div class="shop-title">蔵前喫茶店 - 座席確認</div>
+  <div class="floor-title">蔵前喫茶店 - 座席確認</div>
   <% else %>
-  <div class="shop-title">蔵前喫茶店 - 座席選択</div>
+  <div class="floor-title">蔵前喫茶店 - 座席選択</div>
   <% end %>
 
   <% unless confirm_mode %>
-  <div class="shop-subtitle">ご希望の座席をタップして予約に進んでください。</div>
+  <div class="floor-subtitle">ご希望の座席をタップして予約に進んでください。</div>
   <% end %>
 
   <div class="legend-area">
@@ -29,11 +29,11 @@
   </div>
 
   
-    <div class="cafe-floor-plan">
+    <div class="kuramae-floor-plan">
       
-      <div class="floor-object floor-object-counter-left object-counter-left">カ<br>ウ<br>ン<br>タ<br>┃<br>席</div>
-      <div class="floor-object floor-object-counter-bottom object-counter-bottom">カウンター席</div>
-      <div class="floor-object kuramae-reception">受付</div>
+      <div class="floor-object floor-object-counter object-counter-left">カ<br>ウ<br>ン<br>タ<br>┃<br>席</div>
+      <div class="floor-object floor-object-counter object-counter-bottom">カウンター席</div>
+      <div class="floor-object floor-object-reception kuramae-reception">受付</div>
       <div class="floor-object floor-object-entrance infra-entrance">入り口</div>
       <div class="floor-object floor-object-wc infra-wc">W.C.</div>
 
@@ -54,10 +54,10 @@
       </label>
 
       <label class="seat-label seat-a7">
-        <input type="radio" name="seat_id" value="A-7" class="seat-radio" disabled>
-        <div class="seat-box disabled">
+        <input type="radio" name="seat_id" value="A-7" class="seat-radio">
+        <div class="seat-box">
           <span class="seat-num">A-7</span>
-          <span class="seat-info">満席</span>
+          <span class="seat-info">¥500</span>
         </div>
       </label>
 
