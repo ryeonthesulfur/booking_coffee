@@ -6,7 +6,7 @@
 <% end %>
 
 
-<!-- ヒーローセクション / 検索バー -->
+<!-- ヒーローセクション -->
 <header class="top-header">
   <div class="top-inner">
 
@@ -16,6 +16,7 @@
       <%= link_to "ログインまたは新規登録", new_user_session_path, class: "top-cta__btn" %>
     </div>
 
+<!-- 検索バー -->
     <div class="search-bar">
       <div class="search-field">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -56,28 +57,20 @@
   </div>
 </header>
 
-<!-- 席一覧セクション -->
-<main class="seats-section">
-  <div class="seats-header">
-    <h2 class="seats-heading">人気の喫茶店</h2>
+<!-- 店舗一覧セクション -->
+<main class="stores-section">
+  <div class="stores-header">
+    <h2 class="stores-heading">人気の喫茶店</h2>
   </div>
 
-  <div class="seats-carousel">
-    <button class="seats-carousel__btn seats-carousel__btn--left" id="carousel-btn-left" disabled>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-    </button>
-
-    <div class="seats-carousel__viewport">
-      <div class="seats-carousel__track" id="carousel-track">
+    <div class="stores-viewport">
+      <div class="stores-track" id="carousel-track">
         <% @stores.each do |store| %>
           <%= render partial: "seat_card", locals: { store: store } %>
         <% end %>
       </div>
     </div>
 
-    <button class="seats-carousel__btn seats-carousel__btn--right" id="carousel-btn-right" disabled>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-    </button>
   </div>
 </main>
 

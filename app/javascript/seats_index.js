@@ -61,41 +61,6 @@ document.addEventListener('turbo:load', function () {
       }
     });
   }
-  
-
-  // ── カルーセル ──
-  const track = document.getElementById('carousel-track');
-  if (track) {
-    const btnLeft = document.getElementById('carousel-btn-left');
-    const btnRight = document.getElementById('carousel-btn-right');
-    const cards = track.querySelectorAll('.seat-card');
-    const visibleCount = 3;
-    let currentIndex = 0;
-
-    function updateCarousel() {
-      const gap = 24; // 1.5rem
-      const cardWidth = cards[0].offsetWidth;
-      track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
-      btnLeft.disabled = currentIndex === 0;
-      btnRight.disabled = currentIndex >= cards.length - visibleCount;
-    }
-
-    btnRight.addEventListener('click', () => {
-      if (currentIndex < cards.length - visibleCount) {
-        currentIndex++;
-        updateCarousel();
-      }
-    });
-
-    btnLeft.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-      }
-    });
-
-    updateCarousel();
-  }
 
   // ── カテゴリフィルターボタンの切り替え ──
   const filterContainer = document.getElementById('filter-buttons');
