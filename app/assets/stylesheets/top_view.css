@@ -14,7 +14,7 @@ body {
 }
 
 /* =====================================================
-   ナビゲーション
+   ナビゲーション（全画面共通）
    ===================================================== */
 
 .top-nav {
@@ -101,7 +101,38 @@ body {
 }
 
 /* =====================================================
-   ヒーローCTAエリア
+   ヘッダー / ヒーローセクション（ナビゲーション〜３店舗一覧の間）
+   ===================================================== */
+
+.top-header {
+  background-color: #634623;
+  border-bottom: 1px solid #a1b436;
+  padding: 1rem 1.5rem 2rem;
+}
+
+.top-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.top-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #d8d8d8;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.top-heading svg {
+  color: #b45309;
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   ヒーローCTAエリア（トップ画面キャッチコピー箇所、ログイン/新規登録ボタン）
    ===================================================== */
 
 .top-cta {
@@ -140,38 +171,6 @@ body {
 .top-cta__btn:hover {
   background-color: #f5f5f4;
 }
-
-/* =====================================================
-   ヘッダー / ヒーローセクション
-   ===================================================== */
-
-.top-header {
-  background-color: #634623;
-  border-bottom: 1px solid #a1b436;
-  padding: 1rem 1.5rem 2rem;
-}
-
-.top-inner {
-  max-width: 64rem;
-  margin: 0 auto;
-}
-
-.top-heading {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #d8d8d8;
-  margin: 0 0 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'Noto Serif JP', serif;
-}
-
-.top-heading svg {
-  color: #b45309;
-  flex-shrink: 0;
-}
-
 
 /* =====================================================
    検索バー
@@ -297,29 +296,6 @@ body {
 }
 
 /* =====================================================
-   席一覧セクション
-   ===================================================== */
-
-.seats-section {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
-
-.seats-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 2rem;
-}
-
-.seats-heading {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-/* =====================================================
    カテゴリフィルター
    ===================================================== */
 
@@ -346,69 +322,57 @@ body {
   border-color: #292524;
 }
 
+
 /* =====================================================
-   カルーセル
+   ３店舗一覧セクション
    ===================================================== */
 
-.seats-carousel {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+.stores-section {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
 }
 
-.seats-carousel__viewport {
+.stores-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.stores-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* =====================================================
+   ３店舗の横並びレイアウト
+   ===================================================== */
+
+.stores-viewport {
   overflow: hidden;
   flex: 1;
   padding: 8px 0;
   margin: -8px 0;
 }
 
-.seats-carousel__track {
+.stores-track {
   display: flex;
   gap: 1.5rem;
   transition: transform 0.4s ease;
 }
 
-.seats-carousel__track .seat-card {
+.stores-track .store-card {
   flex: 0 0 calc((100% - 3rem) / 3);
   min-width: 0;
-}
-
-.seats-carousel__btn {
-  flex-shrink: 0;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  background-color: #ffffff;
-  border: 1px solid #e7e5e4;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.2s, opacity 0.2s;
-  color: #1c1917;
-}
-
-.seats-carousel__btn:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.seats-carousel__btn:disabled {
-  opacity: 0;
-  pointer-events: none;
-  cursor: default;
-}
-
-.seats-carousel__btn:disabled {
-  display: none;
 }
 
 /* =====================================================
    席カード
    ===================================================== */
 
-.seat-card {
+.store-card {
   box-sizing: border-box;
   background-color: #ffffff;
   border-radius: 1.5rem;
@@ -417,12 +381,12 @@ body {
   transition: all 0.3s;
 }
 
-.seat-card:hover {
+.store-card:hover {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
 }
 
-.seat-card__image {
+.store-card__image {
   height: 12rem;
   background-color: #e7e5e4;
   position: relative;
@@ -430,7 +394,7 @@ body {
   background-position: center;
 }
 
-.seat-card__overlay {
+.store-card__overlay {
   position: absolute;
   top: 0;
   right: 0;
@@ -439,7 +403,7 @@ body {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
 }
 
-.seat-card__rating {
+.store-card__rating {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -452,7 +416,7 @@ body {
   letter-spacing: 0.05em;
 }
 
-.seat-card__tags {
+.store-card__tags {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -460,7 +424,7 @@ body {
   gap: 0.5rem;
 }
 
-.seat-card__tag {
+.store-card__tag {
   background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
   padding: 0.25rem 0.5rem;
@@ -471,24 +435,24 @@ body {
   letter-spacing: 0.05em;
 }
 
-.seat-card__body {
+.store-card__body {
   padding: 1.5rem;
 }
 
-.seat-card__top {
+.store-card__top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.5rem;
 }
 
-.seat-card__name-row {
+.store-card__name-row {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.seat-card__smoking {
+.store-card__smoking {
   font-size: 0.65rem;
   font-weight: 700;
   padding: 0.15rem 0.4rem;
@@ -496,53 +460,53 @@ body {
   white-space: nowrap;
 }
 
-.seat-card__smoking--non {
+.store-card__smoking--non {
   background-color: #dcfce7;
   color: #15803d;
 }
 
-.seat-card__smoking--yes {
+.store-card__smoking--yes {
   background-color: #fef3c7;
   color: #92400e;
 }
 
-.seat-card__name {
+.store-card__name {
   font-size: 1.125rem;
   font-weight: 700;
   color: #1c1917;
   margin: 0;
 }
 
-.seat-card__desc-row {
+.store-card__desc-row {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   margin: 0.25rem 0 0;
 }
 
-.seat-card__desc {
+.store-card__desc {
   font-size: 0.875rem;
   color: #78716c;
   margin: 0;
 }
 
-.seat-card__price {
+.store-card__price {
   text-align: right;
 }
 
-.seat-card__price-value {
+.store-card__price-value {
   font-size: 1.25rem;
   font-weight: 900;
   color: #92400e;
 }
 
-.seat-card__price-unit {
+.store-card__price-unit {
   display: block;
   font-size: 10px;
   color: #a8a29e;
 }
 
-.seat-card__meta-row {
+.store-card__meta-row {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -551,7 +515,7 @@ body {
   margin-top: 1rem;
 }
 
-.seat-card__meta-item {
+.store-card__meta-item {
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -559,7 +523,7 @@ body {
   color: #57534e;
 }
 
-.seat-card__reserve {
+.store-card__reserve {
   width: 100%;
   background-color: #1c1917;
   color: #ffffff;
@@ -579,62 +543,6 @@ body {
   text-decoration-line: none;
 }
 
-.seat-card:hover .seat-card__reserve {
+.store-card:hover .store-card__reserve {
   background-color: #92400e;
-}
-
-/* =====================================================
-   週末セールセクション
-   ===================================================== */
-
-.sale-section {
-  background-color: #f5f0e0;
-  padding: 3rem 1.5rem;
-}
-
-.sale-section__inner {
-  max-width: 64rem;
-  margin: 0 auto;
-}
-
-.sale-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.sale-badge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background-color: #dc2626;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.375rem;
-  letter-spacing: 0.05em;
-}
-
-.sale-price {
-  text-align: right;
-}
-
-.sale-price__original {
-  display: block;
-  font-size: 0.75rem;
-  color: #a8a29e;
-  text-decoration: line-through;
-}
-
-.sale-price__value {
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: #dc2626;
-}
-
-.sale-price__unit {
-  display: block;
-  font-size: 10px;
-  color: #a8a29e;
 }
