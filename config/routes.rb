@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   }
 
   resources :stores, only: [ :index, :show ] do
-    resources :seats, only: [ :show ] do
-      resources :reservations, only: [ :create ] do
+    resources :seats, only: [] do   # どの座席の予約内容かをURLで渡すためだけに記述。
+      resources :reservations, only: [ :new, :create ] do
           collection do
             post "confirm"
           end
@@ -68,5 +68,23 @@ Deviseはログイン失敗時に flash にエラーメッセージを格納し�
 （まとめ）
 「これらの経験から、便利なライブラリであっても、依存するフレームワークのバージョンアップによって意図しない動作をすることがあると学びました。
 その際には、ライブラリの内部実装を読み解いて原因を特定し、公式ドキュメントに沿った最小限のカスタマイズで問題を解決する能力が重要だと考えています。」
+
+=end
+
+
+=begin
+
+元々、seats コントローラーのshow アクションに予約内容の新規作成を任せていたが、
+後から考えて「reservations#new」の方が適切だと気づき、移行した。
+
+移行後、seats コントローラーは不要となり、ルーティングの方も、「resources :seats, only: [ :show ] do」と記述していたが、
+実質URL生成のためだけあるようなものになってしまった。
+
+そこで、このルーティングも消した方がいいのかをClaude と相談したところ、
+URL構造が変化し、全体的に、データをビューへ渡すコントローラーの各アクション内の記述にまで影響するため、
+「:show」は消して、「resources :seats, only: [] do」にして残しておいた方がいいという判断になりました。
+
+そうしないと、reservationsで管理してるビューへのURLを一つ一つ個別に「:seat_id」を含めた専用URLを手動で書かなくてはならなくなるからです。
+
 
 =end
