@@ -6,7 +6,8 @@ function toReservationForm() {
         const seatNumber = document.querySelector('input[name="seat_id"]:checked').value;
         const storeId = formButton.getAttribute('data-store-id');
 
-        window.location.href = `/stores/${storeId}/seats/${seatNumber}`;
+        window.location.href = `/stores/${storeId}/seats/${seatNumber}/reservations/new`;
+
 
 });
 
