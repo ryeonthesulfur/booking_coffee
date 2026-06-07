@@ -1,6 +1,8 @@
 class ReservationsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_reservation, only: [ :complete, :destroy ]
   def index
-    @reservations = Reservation.where(user_id: current_user.id).includes(seat: :store)
+    @reservations = current_user.reservations.includes(seat: :store)
     @user = current_user
   end
   def confirm
@@ -11,11 +13,12 @@ class ReservationsController < ApplicationController
     @reservation.seat = @seat
   end
 
-
   def create
     @store = Store.find(params[:store_id])
     @seat = Seat.find(params[:seat_id])
     @reservation = Reservation.new(reservation_params)
+    @reservation.user = current_user
+    @reservation.seat = @seat
     if @reservation.save
       redirect_to complete_store_seat_reservation_path(@store, @seat, @reservation)
     else
@@ -23,23 +26,19 @@ class ReservationsController < ApplicationController
     end
   end
 
-
   def complete
     @store = Store.find(params[:store_id])
     @seat = Seat.find(params[:seat_id])
-    @reservation = Reservation.find(params[:id])
   end
 
   def show
-    @reservation = Reservation.includes(seat: :store).find(params[:id])
+    @reservation = current_user.reservations.includes(seat: :store).find(params[:id])
     @store = @reservation.seat.store
     @seat = @reservation.seat
   end
 
   def destroy
-    @reservation = Reservation.find(params[:id])
-    if @reservation.user_id == current_user.id
-      @reservation.destroy
+    if @reservation.destroy
       redirect_to reservations_path, notice: "予約をキャンセルしました。"
     else
       redirect_to reservations_path, alert: "予約のキャンセルに失敗しました。"
@@ -52,9 +51,12 @@ class ReservationsController < ApplicationController
   def reservation_params
     params.require(:reservation).permit(:start_time, :num_people, :phone_number, :notes).merge(user_id: current_user.id, seat_id: params[:seat_id])
   end
+
+
+  def set_reservation
+    @reservation = current_user.reservations.find(params[:id])
+  end
 end
-
-
 
 =begin
 
