@@ -1,4 +1,5 @@
 class SeatsController < ApplicationController
+  before_action :authenticate_user!, only: [ :show ]
   def show
     @seat = Seat.find_by(seat_number: params[:id], store_id: params[:store_id])
     @reservation = Reservation.new
