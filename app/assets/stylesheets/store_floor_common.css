@@ -73,6 +73,29 @@
 }
 
 /* =====================================================
+   座席ラベル・テキスト（共通） - 無効状態
+    予約不可の座席や、現在使用中の座席に適用
+     - カラーをグレー系に変更
+     - カーソルを「not-allowed」に変更
+   ===================================================== */
+
+.seat-label.disabled {
+  cursor: not-allowed;
+}
+
+.seat-label.disabled .seat-box {
+  background-color: #d6d3d1;
+  border-color: #b5b4b1;
+  cursor: not-allowed;
+}
+
+.seat-label.disabled .seat-num,
+.seat-label.disabled .seat-info {
+  color: #78716c;
+}
+
+
+/* =====================================================
    座席ボックス（共通）
    ===================================================== */
 

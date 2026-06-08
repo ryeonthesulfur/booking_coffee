@@ -11,6 +11,11 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     @reservation.user = current_user
     @reservation.seat = @seat
+
+    @reserved_seat_numbers = @store.seats
+      .joins(:reservations)
+      .where(reservations: { status: [ :reserved, :using ] })
+      .pluck(:seat_number)
   end
 
   def new
