@@ -36,72 +36,81 @@
       <div class="floor-object floor-object-entrance musubi-entrance">入り口</div>
       <div class="floor-object floor-object-wc musubi-wc">W.C.</div>
 
-      <label class="seat-label musubi-seat-c1">
-        <input type="radio" name="seat_id" value="C-1" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('C-1') %>
+      <label class="seat-label musubi-seat-c1 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="C-1" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box musubi-circle">
           <span class="seat-num">テラス</span>
           <span class="seat-info">C-1 / 2名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-c2">
-        <input type="radio" name="seat_id" value="C-2" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('C-2') %>
+      <label class="seat-label musubi-seat-c2 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="C-2" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box musubi-circle">
           <span class="seat-num">テラス</span>
           <span class="seat-info">C-2 / 2名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-c3">
-        <input type="radio" name="seat_id" value="C-3" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('C-3') %>
+      <label class="seat-label musubi-seat-c3 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="C-3" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box musubi-circle">
           <span class="seat-num">テラス</span>
           <span class="seat-info">C-3 / 4名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-b1">
-        <input type="radio" name="seat_id" value="B-1" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('B-1') %>
+      <label class="seat-label musubi-seat-b1 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="B-1" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box">
           <span class="seat-num">テーブル席</span>
           <span class="seat-info">B-1 / 2名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-b3">
-        <input type="radio" name="seat_id" value="B-3" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('B-3') %>
+      <label class="seat-label musubi-seat-b3 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="B-3" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box">
           <span class="seat-num">テーブル席</span>
           <span class="seat-info">B-3 / 2名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-b5">
-        <input type="radio" name="seat_id" value="B-5" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('B-5') %>
+      <label class="seat-label musubi-seat-b5 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="B-5" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box">
           <span class="seat-num">テーブル席</span>
           <span class="seat-info">B-5 / 2名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-b2">
-        <input type="radio" name="seat_id" value="B-2" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('B-2') %>
+      <label class="seat-label musubi-seat-b2 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="B-2" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box">
           <span class="seat-num">テーブル席</span>
           <span class="seat-info">B-2 / 4名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-b4">
-        <input type="radio" name="seat_id" value="B-4" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('B-4') %>
+      <label class="seat-label musubi-seat-b4 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="B-4" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box">
           <span class="seat-num">テーブル席</span>
           <span class="seat-info">B-4 / 4名</span>
         </div>
       </label>
 
-      <label class="seat-label musubi-seat-b6">
-        <input type="radio" name="seat_id" value="B-6" class="seat-radio">
+      <% reserved = @reserved_seat_numbers&.include?('B-6') %>
+      <label class="seat-label musubi-seat-b6 <%= 'disabled' if reserved %>">
+        <input type="radio" name="seat_id" value="B-6" class="seat-radio" <%= 'disabled' if reserved %>>
         <div class="seat-box">
           <span class="seat-num">テーブル席</span>
           <span class="seat-info">B-6 / 4名</span>
