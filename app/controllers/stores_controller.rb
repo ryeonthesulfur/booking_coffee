@@ -13,11 +13,19 @@ class StoresController < ApplicationController
     # 座席番号順に座席一覧を取得
     @seats = @store.seats.order(:seat_number)
 
-    # 予約中または使用中の座席番号を取得
-    @reserved_seat_numbers = @store.seats
-      .joins(:reservations)
-      .where(reservations: { status: [ :reserved, :using ] })
-      .pluck(:seat_number)
+    if params[:start_time].present?
+      start_time = Time.zone.parse(params[:start_time].delete("〜"))
+
+      # ユーザーが選択した時刻(start_time)に利用中となる予約を探す
+      # 条件: 予約の開始時刻(S)が (start_time - 3時間) < S <= start_time の間にある
+      @reserved_seat_numbers = @store.seats
+        .joins(:reservations)
+        .where(reservations: { status: [ :reserved, :using ] })
+        .where("reservations.start_time > ? AND reservations.start_time <= ?", start_time - 3.hours, start_time)
+        .pluck(:seat_number)
+    else
+      @reserved_seat_numbers = []
+    end
 
     # 座席タイプごとの席数を集計（店舗詳細画面のサマリー表示用）
     @seats_summary = @store.seats.group(:seat_type).count

@@ -324,5 +324,34 @@
   color: #92400e;
 }
 
+/* =====================================================
+   予約日時選択カレンダー (stores#show)
+   ===================================================== */
 
+.floor-date-picker {
+  max-width: 64rem;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
+}
 
+.floor-date-picker__label {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1c1917;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e7e5e4;
+}
+
+.floor-date-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 1rem;
+  padding: 0.875rem 1.25rem;
+  font-size: 1rem;
+  color: #1c1917;
+  cursor: pointer;
+}
