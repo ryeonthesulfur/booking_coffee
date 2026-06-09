@@ -1,3 +1,11 @@
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+  <%= javascript_include_tag "seats_index" %>
+<% end %>
+
+
 <div class="store-hero" style="background-image: url('<%= @store.image_url %>');">
   <div class="store-hero__overlay">
     <div class="store-hero__inner">
@@ -29,6 +37,16 @@
     </section>
   </div>
 </main>
+
+<!-- 予約日時選択カレンダー（flatpickr）
+     日時選択後、?start_time=値 付きでページ再ロードし、
+     予約済み座席をグレイアウト反映させる -->
+<div class="floor-date-picker">
+  <label class="floor-date-picker__label" for="date-input">予約日時を選択</label>
+  <input type="text" id="date-input" placeholder="日時を選択してください" readonly class="floor-date-input" />
+</div>
+
+
 
 
 <% if @store.name == "蔵前喫茶店" %>
