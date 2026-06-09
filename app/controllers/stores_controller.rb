@@ -24,7 +24,14 @@ class StoresController < ApplicationController
         .where("reservations.start_time > ? AND reservations.start_time <= ?", start_time - 3.hours, start_time)
         .pluck(:seat_number)
     else
-      @reserved_seat_numbers = []
+      # 日時未選択のとき：次の30分スロットを基準にグレイアウト計算する
+      now = Time.zone.now
+      default_time = now.min < 30 ? now.change(min: 30, sec: 0) : now.change(hour: now.hour + 1, min: 0, sec: 0)
+      @reserved_seat_numbers = @store.seats
+        .joins(:reservations)
+        .where(reservations: { status: [ :reserved, :using ] })
+        .where("reservations.start_time > ? AND reservations.start_time <= ?", default_time - 3.hours, default_time)
+        .pluck(:seat_number)
     end
 
     # 座席タイプごとの席数を集計（店舗詳細画面のサマリー表示用）
