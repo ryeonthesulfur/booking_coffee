@@ -46,6 +46,16 @@ document.addEventListener('turbo:load', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const startTimeParam = urlParams.get('start_time');
 
+    // URLパラメーターに過去の日時が入っていた場合は次の30分スロットに補正する
+    let defaultDateVal;
+    if (startTimeParam) {
+      const parsed = new Date(startTimeParam.replace('〜', ''));  // "2026-05-17 14:30〜" → "2026-05-17 14:30" にしてからDateオブジェクトに変換
+      defaultDateVal = parsed > new Date() ? parsed : getNextHalfHour();  // URLの日時が未来なら使い、過去なら次の30分スロットを初期値にする
+    } else {
+      defaultDateVal = getNextHalfHour();
+    }
+    const isDefaultToday = new Date(defaultDateVal).toDateString() === new Date().toDateString(); // 初期値が今日の日付かどうかを判定（今日なら現在時刻以降のみ選択可能にするため）
+
     flatpickr(dateInput, {
       enableTime: true,               // 時刻も選択できるようにする
       dateFormat: "Y-m-d H:i〜",        // サーバーに送る表示形式（例：2026年5月17日 14:30〜）
@@ -54,23 +64,26 @@ document.addEventListener('turbo:load', function () {
       locale: "ja",                   // カレンダーを日本語表示にする
       minDate: "today",               // 今日より前の日付は選択不可
       maxDate: getMaxDate(),          // 来週の土曜日まで選択可能
-      defaultDate: startTimeParam ? startTimeParam.replace('〜', '') : getNextHalfHour(), // URLパラメーターがあればそれを初期値に、なければ次の30分スロットを初期値にする
-      minTime: getNextHalfHourString(), // 今日の場合の選択可能な直近時刻の「HH:mm」形式
+      defaultDate: defaultDateVal,    // URLパラメーターがあればそれを初期値に、なければ次の30分スロットを初期値にする
+      minTime: isDefaultToday ? getNextHalfHourString() : '00:00', // 今日なら現在時刻以降のみ、翌日以降なら00:00から選択可能
       time_24hr: true,                // 24時間表記（AM/PMではなく）
       minuteIncrement: 30,            // 分の選択を30分刻みにする
       
-      // 日付や時刻を選んだときのイベントハンドラー(選択してカレンダーが閉じたときに呼ばれる「onClose」仕様。
-      // 選択された日時をURLパラメーターに付けてページ再ロードするのは、間取り図ページで選んだ日時を反映させるため。
-      // 予約フォームページでは、URLパラメーターがあればそれを初期値として使うので、選んだ日時がそのまま渡せる。)
-      onClose: function (selectedDates, dateStr, instance) {
+      // 日付を変えるたびにminTimeを更新する（カレンダーを開いたまま翌日に切り替えた場合にも対応）
+      onChange: function (selectedDates, dateStr, instance) {
         if (selectedDates.length === 0) return;
         const selected = selectedDates[0];
         // 選んだ日付が今日かどうか判定
         const isToday = selected.toDateString() === new Date().toDateString();
         // 今日なら現在時刻以降のみ、明日以降なら00:00から選択可能にする
         instance.set('minTime', isToday ? getNextHalfHourString() : '00:00');
+      },
 
-        // 間取り図ページの場合、選択した日時をURLパラメーターに付けてページ再ロード（その日時の座席情報を反映するため）
+      // カレンダーを閉じたときに間取り図ページをリロードする
+      // 選択された日時をURLパラメーターに付けてページ再ロードするのは、間取り図ページで選んだ日時を反映させるため。
+      // 予約フォームページでは、URLパラメーターがあればそれを初期値として使うので、選んだ日時がそのまま渡せる。
+      onClose: function (selectedDates, dateStr, instance) {
+        if (selectedDates.length === 0) return;
         if (document.querySelector('.floor-map-container')) {
           const url = new URL(window.location.href);  // URLオブジェクトを作成
           url.searchParams.set('start_time', dateStr);  // URLの ?start_time= に選んだ日時をセット（例：?start_time=2026-05-17%2014%3A30%EF%BD%9E）
