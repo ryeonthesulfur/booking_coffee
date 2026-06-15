@@ -57,6 +57,12 @@ class ReservationsController < ApplicationController
   end
 
 
+  def check_in
+    @reservation = current_user.reservations.find(params[:id])
+    @reservation.update!(status: :using)
+    redirect_to reservation_path(@reservation), notice: "チェックインしました。"
+  end
+
     private
 
   def reservation_params
