@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reservations, only: [ :index, :show, :destroy ]
+  resources :reservations, only: [ :index, :show, :destroy ] do
+    member do
+      patch :check_in
+    end
+  end
 end
 
 
