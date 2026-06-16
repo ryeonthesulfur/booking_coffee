@@ -1,11 +1,3 @@
-<% content_for :head do %>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
-  <%= javascript_include_tag "seats_index" %>
-<% end %>
-
-
 <!-- ヒーローセクション -->
 <header class="top-header">
   <div class="top-inner">
@@ -14,45 +6,6 @@
       <h2 class="top-cta__heading">会員限定であなたの居場所を<br>お得に予約</h2>
       <p class="top-cta__subtext">"気持ちいっぱいフリーキャンペーン" 実施中！<br>全店舗、予約したらコーヒー全種１杯フリー！</p>
       <%= link_to "ログインまたは新規登録", new_user_session_path, class: "top-cta__btn" %>
-    </div>
-
-<!-- 検索バー -->
-    <div class="search-bar">
-      <div class="search-field">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <input type="text" id="date-input" placeholder="いつ利用しますか？" readonly />
-      </div>
-      <div class="search-field search-field--narrow">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <select class="num-select">
-          <option value="" disabled selected>人数</option>
-          <% (1..6).each do |n| %>
-            <option value="<%= n %>"><%= n %>名</option>
-          <% end %>
-        </select>
-      </div>
-      <button class="search-submit">席を探す</button>
-    </div>
-
-
-    <div class="search-sub-row">
-      <div id="filter-buttons" class="filter-buttons filter-buttons--hero">
-        <button data-category="すべて" class="filter-btn filter-btn--active">すべて</button>
-        <button data-category="コンセント" class="filter-btn">カウンター</button>
-        <button data-category="ソファ" class="filter-btn">テーブル</button>
-        <button data-category="テラス" class="filter-btn">テラス</button>
-      </div>
-      <span style= "color: white;">／</span>
-      <div class="smoking-filters">
-        <label class="search-filter-item">
-          <input type="checkbox" name="smoking[]" value="non_smoking" />
-          禁煙
-        </label>
-        <label class="search-filter-item">
-          <input type="checkbox" name="smoking[]" value="smoking" />
-          喫煙
-        </label>
-      </div>
     </div>
   </div>
 </header>
@@ -66,7 +19,7 @@
     <div class="stores-viewport">
       <div class="stores-track" id="carousel-track">
         <% @stores.each do |store| %>
-          <%= render partial: "seat_card", locals: { store: store } %>
+          <%= render partial: "store_card", locals: { store: store } %>
         <% end %>
       </div>
     </div>
@@ -75,3 +28,4 @@
 </main>
 
 
+<%#「seat_card」を「store_card」に変更 %>

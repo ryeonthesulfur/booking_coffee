@@ -173,157 +173,6 @@ body {
 }
 
 /* =====================================================
-   検索バー
-   ===================================================== */
-
-.search-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  background-color: #b58e35;
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-}
-
-.search-field {
-  flex: 1;
-  min-width: 200px;
-  background-color: #ffffff;
-  border-radius: 0.75rem;
-  padding: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.search-field--narrow {
-  min-width: 150px;
-}
-
-.search-field svg {
-  color: #a8a29e;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-.search-field input {
-  width: 100%;
-  outline: none;
-  border: none;
-  font-size: 0.875rem;
-  background: transparent;
-  font-family: inherit;
-}
-
-.num-select {
-  width: 100%;
-  outline: none;
-  border: none;
-  font-size: 0.875rem;
-  background: transparent;
-  font-family: inherit;
-  cursor: pointer;
-  appearance: none;
-}
-
-.search-sub-row {
-  display: flex;
-  align-items: center;
-  margin-top: 0.75rem;
-  gap: 2rem;
-}
-
-.smoking-filters {
-  display: flex;
-  align-items: center;
-  gap: 1.7rem;
-}
-
-.search-filter-item {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  font-size: 0.875rem;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.search-filter-item input[type="checkbox"] {
-  accent-color: #92400e;
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
-}
-
-.filter-buttons--hero {
-  margin-top: 0;
-}
-
-.filter-buttons--hero .filter-btn {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.filter-buttons--hero .filter-btn:hover {
-    border-color: #fffffe;
-}
-
-.filter-buttons--hero .filter-btn--active {
-  background-color: #ffffff;
-  color: #292524;
-  border-color: #ffffff;
-}
-
-.search-submit {
-  background-color: #92400e;
-  color: #ffffff;
-  padding: 0.75rem 2rem;
-  border-radius: 0.75rem;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: background-color 0.2s;
-}
-
-.search-submit:hover {
-  background-color: #78350f;
-}
-
-/* =====================================================
-   カテゴリフィルター
-   ===================================================== */
-
-.filter-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.filter-btn {
-  padding: 0.375rem 1rem;
-  border-radius: 9999px;
-  border: 1px solid #d6d3d1;
-  background-color: #ffffff;
-  color: #292524;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.875rem;
-  transition: all 0.2s;
-}
-
-.filter-btn--active {
-  background-color: #292524;
-  color: #4a4a4a;
-  border-color: #292524;
-}
-
-
-/* =====================================================
    ３店舗一覧セクション
    ===================================================== */
 
@@ -386,6 +235,11 @@ body {
   overflow: hidden;
   border: 1px solid #e7e5e4;
   transition: all 0.3s;
+  /* .store-card__body に flex: 1 を効かせるために flex container にする。
+     縦並びにすることで「画像 → 本文」の順に積み上がり、
+     本文が残りの高さをすべて埋める */
+  display: flex;
+  flex-direction: column;
 }
 
 .store-card:hover {
@@ -444,6 +298,12 @@ body {
 
 .store-card__body {
   padding: 1.5rem;
+  /* .store-card__reserve を一番下に固定するために flex container にする。
+     margin-top: auto は flexアイテムにしか効かないため */
+  display: flex;
+  flex-direction: column;
+  /* 親（.store-card）のflex containerの中で、画像の残り高さをすべてもらう */
+  flex: 1;
 }
 
 .store-card__top {
@@ -548,6 +408,8 @@ body {
   transition: background-color 0.2s;
   box-sizing: border-box;
   text-decoration-line: none;
+  /* 上の余白をすべて自動で埋めて、ボタンを本文エリアの一番下に固定する */
+  margin-top: auto;
 }
 
 .store-card:hover .store-card__reserve {

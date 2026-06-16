@@ -92,24 +92,4 @@ document.addEventListener('turbo:load', function () {
       }
     });
   }
-
-  // ── カテゴリフィルターボタンの切り替え ──
-  const filterContainer = document.getElementById('filter-buttons');
-  if (!filterContainer) return;
-
-  const filterBtns = filterContainer.querySelectorAll('.filter-btn');
-
-  filterContainer.addEventListener('click', (event) => {
-    // クリックされた要素が .filter-btn かどうか確認（子要素クリックにも対応）
-    const clicked = event.target.closest('.filter-btn');
-    if (!clicked) return;
-
-    // いったんすべてのボタンからアクティブクラスを外す
-    filterBtns.forEach(btn => btn.classList.remove('filter-btn--active'));
-    // クリックされたボタンだけアクティブにする
-    clicked.classList.add('filter-btn--active');
-
-    const selected = clicked.dataset.category;
-    console.log('選択されたカテゴリ:', selected);
-  });
 });
