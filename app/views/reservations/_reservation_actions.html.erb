@@ -1,0 +1,23 @@
+<div class="reservation-actions">
+  <% if reservation.using? %>
+    <%= button_to "退店する", reservation_path(reservation), method: :delete,
+          data: { turbo_confirm: "退店しますか？" },
+          class: "checkout-btn" %>
+
+  <% elsif Time.current >= reservation.start_time - 15.minutes %>
+
+    <%= button_to "チェックイン", check_in_reservation_path(reservation), method: :patch, 
+          data: { turbo_confirm: "チェックインしますか？" },
+          class: "checkin-btn" %>
+
+    <%= button_to "この予約をキャンセルする", reservation_path(reservation), method: :delete,
+          data: { turbo_confirm: "本当にキャンセルしますか？" },
+          class: "cancel-btn" %>
+
+  <% else %>
+
+    <%= button_to "この予約をキャンセルする", reservation_path(reservation), method: :delete,
+          data: { turbo_confirm: "本当にキャンセルしますか？" },
+          class: "cancel-btn" %>
+  <% end %>
+</div>

@@ -1,0 +1,27 @@
+<p><%= @user.name %> 様</p>
+
+<p>以下のご予約は、チェックインが確認できなかったため自動キャンセルされました。</p>
+
+<table>
+  <tr>
+    <th>店舗</th>
+    <td><%= @reservation.seat.store.name %></td>
+  </tr>
+  <tr>
+    <th>席番号</th>
+    <td><%= @reservation.seat.seat_number %></td>
+  </tr>
+  <tr>
+    <th>予約日時</th>
+    <td><%= @reservation.start_time.strftime("%Y年%m月%d日 %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>人数</th>
+    <td><%= @reservation.num_people %>名</td>
+  </tr>
+</table>
+
+<p>またのご利用をお待ちしております。</p>
+<p>booking coffee</p>
+
+<p><%= link_to "トップ画面へ", root_url %></p>
