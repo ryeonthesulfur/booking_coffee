@@ -22,7 +22,17 @@
               </p>
             </div>
 
-            <%= link_to "間取り図", reservation_path(r), class: "reservation-card__link" %>
+            <div class="reservation-card__actions">
+              <span class="status-badge status-badge--<%= r.status %>" style="margin-right: 2rem;">
+                 <% if r.reserved? %>
+                  予約済
+                 <% elsif r.using? %>
+                  利用中
+                 <% end %>
+              </span>
+                 <%= link_to "間取り図", reservation_path(r), class: "reservation-card__link" %>
+            </div>
+
           </div>
         <% end %>
       </div>
