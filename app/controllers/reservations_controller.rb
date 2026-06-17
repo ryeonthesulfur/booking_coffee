@@ -12,9 +12,14 @@ class ReservationsController < ApplicationController
     @reservation.user = current_user
     @reservation.seat = @seat
 
+    start_time = @reservation.start_time
+
+    # ユーザーが選択した時刻(start_time)に利用中となる予約を探す
+    # 条件: 予約の開始時刻(S)が (start_time - 3時間) < S < (start_time + 3時間) の間にある
     @reserved_seat_numbers = @store.seats
       .joins(:reservations)
       .where(reservations: { status: [ :reserved, :using ] })
+      .where("reservations.start_time > ? AND reservations.start_time < ?", start_time - 3.hours, start_time + 3.hours)
       .pluck(:seat_number)
   end
 
