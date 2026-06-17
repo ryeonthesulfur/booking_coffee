@@ -46,15 +46,18 @@ document.addEventListener('turbo:load', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const startTimeParam = urlParams.get('start_time');
 
-    // URLパラメーターに過去の日時が入っていた場合は次の30分スロットに補正する
     let defaultDateVal;
+    // URLがあるのかどうか、ある場合はその日時が未来か過去かだけを判定して、初期値を決める。（日時表示の分岐のみなので、「isDefaultToday」と「minTime」で時間選択を決める。）
+    // URLがなければ、初期値は現在時刻より次の30分スロットになる。
     if (startTimeParam) {
       const parsed = new Date(startTimeParam.replace('〜', ''));  // "2026-05-17 14:30〜" → "2026-05-17 14:30" にしてからDateオブジェクトに変換
-      defaultDateVal = parsed > new Date() ? parsed : getNextHalfHour();  // URLの日時が未来なら使い、過去なら次の30分スロットを初期値にする
+      defaultDateVal = parsed > new Date() ? parsed : getNextHalfHour();  // URLの日時が未来なら使い、過去なら現在時刻より次の30分間を初期値にする（ただし、この時点ではその未来が今日中なのか翌日以降なのかまでは判定していない。）
     } else {
-      defaultDateVal = getNextHalfHour();
+      defaultDateVal = getNextHalfHour(); // 座席の予約間取り図画面に遷移した直後はこっち（現在時刻より次の３０分間）。
     }
-    const isDefaultToday = new Date(defaultDateVal).toDateString() === new Date().toDateString(); // 初期値が今日の日付かどうかを判定（今日なら現在時刻以降のみ選択可能にするため）
+
+    // 指定した日時が今日中の未来時刻の場合、現在時刻以降のみを「minTime」で選択できるようにするため、今日かどうかを判定する。URL無しの場合（画面遷移直後）も同じ。
+    const isDefaultToday = new Date(defaultDateVal).toDateString() === new Date().toDateString();
 
     flatpickr(dateInput, {
       enableTime: true,               // 時刻も選択できるようにする
@@ -64,12 +67,14 @@ document.addEventListener('turbo:load', function () {
       locale: "ja",                   // カレンダーを日本語表示にする
       minDate: "today",               // 今日より前の日付は選択不可
       maxDate: getMaxDate(),          // 来週の土曜日まで選択可能
-      defaultDate: defaultDateVal,    // URLパラメーターがあればそれを初期値に、なければ次の30分スロットを初期値にする
+      defaultDate: defaultDateVal,    // URLパラメーターがあればそれを初期値に、なければ現在時刻より次の30分スロットを初期値にする（座席の予約間取り図画面に遷移した直後は現在時刻なので、defaultDateValがそのまま入る。）
       minTime: isDefaultToday ? getNextHalfHourString() : '00:00', // 今日なら現在時刻以降のみ、翌日以降なら00:00から選択可能
       time_24hr: true,                // 24時間表記（AM/PMではなく）
       minuteIncrement: 30,            // 分の選択を30分刻みにする
       
-      // 日付を変えるたびにminTimeを更新する（カレンダーを開いたまま翌日に切り替えた場合にも対応）
+      
+      // 画面リロード時の時間選択範囲の判定だけでなく、カレンダーで日付を選択している最中でも同様の判定が機能するようにした。
+      // これがないと、翌日以降で、今日よりも過去の時刻で選択した場合、画面リロード後、カレンダー内では更新されず、今日の日付で過去の時刻を選択できてしまうため。
       onChange: function (selectedDates, dateStr, instance) {
         if (selectedDates.length === 0) return;
         const selected = selectedDates[0];
