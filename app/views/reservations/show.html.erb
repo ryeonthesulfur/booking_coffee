@@ -37,7 +37,7 @@
       <% end %>
     </div>
 
-# 各店舗の間取り図を表示する部分。予約確認の間取り図と同様に、予約席番号を data-seat-number 属性にセットして、該当席を選択した状態で表示する。
+<%# 各店舗の間取り図を表示する部分。予約確認の間取り図と同様に、予約席番号を data-seat-number 属性にセットして、該当席を選択した状態で表示する。%>
     <div class="confirm-seat-container">
       <div id="confirmed-seat" data-seat-number="<%= @seat.seat_number %>"></div>
       <% if @store.name == "蔵前喫茶店" %>

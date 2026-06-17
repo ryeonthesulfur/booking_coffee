@@ -9,12 +9,12 @@ stores_data = [
   {
     name: "カフェ・ロンド",
     image_url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2070&auto=format&fit=crop",
-    smoking: true
+    smoking: false
   },
   {
     name: "蔵前喫茶店",
     image_url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=2070&auto=format&fit=crop",
-    smoking: false
+    smoking: true
   },
   {
     name: "喫茶むすび",
@@ -35,40 +35,40 @@ puts "#{Store.count}店舗のシードが完了しました"
 # capacity: 最大人数, price_per_hour: 1時間あたりの料金（円）
 seats_by_store = {
   "カフェ・ロンド" => [
-    { seat_number: "A-1", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
-    { seat_number: "A-2", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
-    { seat_number: "A-3", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
-    { seat_number: "A-4", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
-    { seat_number: "A-5", seat_type: "カウンター席", capacity: 1, price_per_hour: 500 },
-    { seat_number: "B-1", seat_type: "テーブル席",   capacity: 2, price_per_hour: 800 },
-    { seat_number: "B-2", seat_type: "テーブル席",   capacity: 4, price_per_hour: 1100 },
-    { seat_number: "B-3", seat_type: "テーブル席",   capacity: 2, price_per_hour: 800 },
-    { seat_number: "B-4", seat_type: "テーブル席",   capacity: 4, price_per_hour: 1100 },
-    { seat_number: "C-1", seat_type: "テラス席",     capacity: 2, price_per_hour: 900 },
-    { seat_number: "C-2", seat_type: "テラス席",     capacity: 4, price_per_hour: 1300 },
+    { seat_number: "A-1", seat_type: "カウンター席", capacity: 1, price_per_hour: 850 },
+    { seat_number: "A-2", seat_type: "カウンター席", capacity: 1, price_per_hour: 850 },
+    { seat_number: "A-3", seat_type: "カウンター席", capacity: 1, price_per_hour: 850 },
+    { seat_number: "A-4", seat_type: "カウンター席", capacity: 1, price_per_hour: 850 },
+    { seat_number: "A-5", seat_type: "カウンター席", capacity: 1, price_per_hour: 850 },
+    { seat_number: "B-1", seat_type: "テーブル席",   capacity: 4, price_per_hour: 850 },
+    { seat_number: "B-2", seat_type: "テーブル席",   capacity: 4, price_per_hour: 850 },
+    { seat_number: "B-3", seat_type: "テーブル席",   capacity: 4, price_per_hour: 850 },
+    { seat_number: "B-4", seat_type: "テーブル席",   capacity: 4, price_per_hour: 850 },
+    { seat_number: "C-1", seat_type: "テラス席",     capacity: 4, price_per_hour: 850 },
+    { seat_number: "C-2", seat_type: "テラス席",     capacity: 4, price_per_hour: 850 }
   ],
   "蔵前喫茶店" => [
-    { seat_number: "A-1", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "A-2", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "A-3", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "A-4", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "A-5", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "A-6", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "A-7", seat_type: "カウンター席", capacity: 1, price_per_hour: 550 },
-    { seat_number: "B-1", seat_type: "テーブル席",   capacity: 2, price_per_hour: 850 },
-    { seat_number: "B-2", seat_type: "テーブル席",   capacity: 4, price_per_hour: 1200 },
-    { seat_number: "B-3", seat_type: "テーブル席",   capacity: 2, price_per_hour: 850 },
+    { seat_number: "A-1", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "A-2", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "A-3", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "A-4", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "A-5", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "A-6", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "A-7", seat_type: "カウンター席", capacity: 1, price_per_hour: 900 },
+    { seat_number: "B-1", seat_type: "テーブル席",   capacity: 4, price_per_hour: 900 },
+    { seat_number: "B-2", seat_type: "テーブル席",   capacity: 4, price_per_hour: 900 },
+    { seat_number: "B-3", seat_type: "テーブル席",   capacity: 4, price_per_hour: 900 }
   ],
   "喫茶むすび" => [
-    { seat_number: "B-1", seat_type: "テーブル席", capacity: 2, price_per_hour: 750 },
-    { seat_number: "B-2", seat_type: "テーブル席", capacity: 4, price_per_hour: 1050 },
-    { seat_number: "B-3", seat_type: "テーブル席", capacity: 2, price_per_hour: 750 },
-    { seat_number: "B-4", seat_type: "テーブル席", capacity: 4, price_per_hour: 1050 },
-    { seat_number: "B-5", seat_type: "テーブル席", capacity: 2, price_per_hour: 750 },
-    { seat_number: "B-6", seat_type: "テーブル席", capacity: 4, price_per_hour: 1050 },
-    { seat_number: "C-1", seat_type: "テラス席",   capacity: 2, price_per_hour: 850 },
-    { seat_number: "C-2", seat_type: "テラス席",   capacity: 2, price_per_hour: 850 },
-    { seat_number: "C-3", seat_type: "テラス席",   capacity: 4, price_per_hour: 1150 },
+    { seat_number: "B-1", seat_type: "テーブル席", capacity: 4, price_per_hour: 880 },
+    { seat_number: "B-2", seat_type: "テーブル席", capacity: 4, price_per_hour: 880 },
+    { seat_number: "B-3", seat_type: "テーブル席", capacity: 4, price_per_hour: 880 },
+    { seat_number: "B-4", seat_type: "テーブル席", capacity: 4, price_per_hour: 880 },
+    { seat_number: "B-5", seat_type: "テーブル席", capacity: 4, price_per_hour: 880 },
+    { seat_number: "B-6", seat_type: "テーブル席", capacity: 4, price_per_hour: 880 },
+    { seat_number: "C-1", seat_type: "テラス席",   capacity: 4, price_per_hour: 880 },
+    { seat_number: "C-2", seat_type: "テラス席",   capacity: 4, price_per_hour: 880 },
+    { seat_number: "C-3", seat_type: "テラス席",   capacity: 4, price_per_hour: 880 }
   ]
 }
 
@@ -88,9 +88,9 @@ puts "#{Seat.count}席のシードが完了しました"
 #
 # id | store_id | seat_number | seat_type    | capacity | price_per_hour
 # ---|----------|-------------|--------------|----------|---------------
-#  1 |    1     |    A-1      | カウンター席  |    1     |     500
-#  2 |    1     |    A-2      | カウンター席  |    1     |     500
-#  3 |    1     |    B-1      | テーブル席    |    2     |     800
-#  4 |    2     |    A-1      | カウンター席  |    1     |     550  ← 蔵前喫茶店の席
+#  1 |    1     |    A-1      | カウンター席  |    1     |     850
+#  2 |    1     |    A-2      | カウンター席  |    1     |     850
+#  3 |    1     |    B-1      | テーブル席    |    4     |     850
+#  4 |    2     |    A-1      | カウンター席  |    1     |     900  ← 蔵前喫茶店の席
 #
 # seeds.rb を実行すると、この表に 30行分のデータが一気に追加される。

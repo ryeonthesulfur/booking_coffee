@@ -59,7 +59,6 @@
       <span class="top-nav__tagline">今日の気分にぴったりの席を見つけましょう</span>
     </div>
     <div class="top-nav__actions">
-      <span class="top-nav__flag">🇯🇵</span>
       <% if user_signed_in? %>
         <%= link_to "予約一覧", reservations_path, class: "top-nav__link" %>
         <%= link_to current_user.name, edit_user_registration_path, class: "top-nav__link" %>
