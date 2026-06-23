@@ -10,6 +10,11 @@
     <%= csp_meta_tag %>
     <meta name="turbo-cache-control" content="no-cache">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -26,6 +31,7 @@
     <%= stylesheet_link_tag "top_view" %>
     <%= stylesheet_link_tag "store_intro" %>
     <%= stylesheet_link_tag "store_floor_common" %>
+
     <%= yield :store_css %>
     <%= stylesheet_link_tag "reservation_form" %>
     <%= stylesheet_link_tag "confirm" %>

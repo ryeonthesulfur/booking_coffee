@@ -1,10 +1,6 @@
 <% content_for :head do %>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
   <%= javascript_include_tag "seats_index" %>
 <% end %>
-
 
 <div class="store-hero" style="background-image: url('<%= @store.image_url %>');">
   <div class="store-hero__overlay">
