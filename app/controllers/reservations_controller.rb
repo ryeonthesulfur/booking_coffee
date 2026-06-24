@@ -9,8 +9,6 @@ class ReservationsController < ApplicationController
     @store = Store.find(params[:store_id])
     @seat = Seat.find(params[:seat_id])
     @reservation = Reservation.new(reservation_params)
-    @reservation.user = current_user
-    @reservation.seat = @seat
 
     start_time = @reservation.start_time
 
@@ -25,7 +23,7 @@ class ReservationsController < ApplicationController
 
   def new
     @seat = Seat.find_by(seat_number: params[:seat_id], store_id: params[:store_id])
-    @reservation = Reservation.new
+    @reservation = Reservation.new(params.permit(:start_time, :num_people, :phone_number, :notes))  # 予約内容修正の際、確認画面時点での情報をクエリパラメーターでそのまま渡すため。
     @store = Store.find(params[:store_id])
   end
 
