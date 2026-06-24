@@ -40,9 +40,7 @@
 | user_id      | bigint   | FK, NOT NULL  | どの客か                   |
 | seat_id      | bigint   | FK, NOT NULL  | どの席か                   |
 | start_time   | datetime | NOT NULL      | 予約開始日時               |
-| end_time     | datetime | NOT NULL      | 予約終了日時               |
 | num_people   | integer  | NOT NULL      | 人数                       |
-| total_price  | integer  | NOT NULL      | 合計料金                   |
 | status       | string   | NOT NULL      | 予約中・キャンセル・完了    |
 | created_at   | datetime | NOT NULL      |                            |
 | updated_at   | datetime | NOT NULL      |                            |
