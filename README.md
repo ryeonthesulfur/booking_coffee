@@ -45,7 +45,7 @@ Basic 認証は現時点実装しておりません。（スムーズな閲覧�
 
 1. **トップページ → 店舗詳細（間取り図）**
    間取り図でのグレイアウト表示。予約済み座席が選択不可になる様子（ダブルブッキング対策の核）。
-   https://gyazo.com/85f0a44b10d324cae6b9109fec4d5841
+   https://gyazo.com/9f577fe7508786b98dcedb5c6e2289ec
 
 2. **予約フォーム → 確認画面**
    https://gyazo.com/a1a5e3adcd402aa57ab4324d02b1a5ad
