@@ -15,8 +15,9 @@
 
 .floor-title {
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 900;
+  font-family: 'Noto Serif JP', serif;
   color: #1c1917;
   margin-bottom: 0.5rem;
 }

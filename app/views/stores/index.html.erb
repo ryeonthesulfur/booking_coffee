@@ -5,7 +5,9 @@
     <div class="top-cta">
       <h2 class="top-cta__heading">会員限定であなたの居場所を<br>お得に予約</h2>
       <p class="top-cta__subtext">"気持ちいっぱいフリーキャンペーン" 実施中！<br>全店舗、予約したらコーヒー全種１杯フリー！</p>
-      <%= link_to "ログインまたは新規登録", new_user_session_path, class: "top-cta__btn" %>
+      <% unless user_signed_in? %>
+        <%= link_to "ログインまたは新規登録", new_user_session_path, class: "top-cta__btn" %>
+      <% end %>
     </div>
   </div>
 </header>
