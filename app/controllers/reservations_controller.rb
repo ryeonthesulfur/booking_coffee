@@ -10,6 +10,10 @@ class ReservationsController < ApplicationController
     @seat = Seat.find(params[:seat_id])
     @reservation = Reservation.new(reservation_params)
 
+    unless @reservation.valid?
+      render "reservations/new", status: :unprocessable_entity and return
+    end
+
     start_time = @reservation.start_time
 
     # ユーザーが選択した時刻(start_time)に利用中となる予約を探す
