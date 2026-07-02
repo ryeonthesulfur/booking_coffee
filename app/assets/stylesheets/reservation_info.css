@@ -1,3 +1,7 @@
+/* =====================================================
+   予約履歴一覧
+   ===================================================== */
+
 .reservation-list-main {
   background-color: #c48e55;
   padding: 3rem 1.5rem;
@@ -11,11 +15,9 @@
 
 .reservation-list-inner {
   width: 80%;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
-
 }
 
 
@@ -126,13 +128,6 @@
   margin: 0 auto;
 }
 
-.reservation-detail {
-  background: #ffffffdc;
-  border: 1px solid #e7e5e4;
-  border-radius: 1.25rem;
-  padding: 2rem;
-}
-
 .reservation-back-link {
   background: #d3640fd6;
   border-radius: 3rem;
@@ -140,7 +135,6 @@
   color: #393939;
   text-decoration: none;
   font-size: 0.875rem;
-  white-space: nowrap;
 }
 
 .reservation-back-link:hover {
@@ -158,6 +152,13 @@
   color: #1c1917;
   margin: 0 0 2rem;
   font-family: 'Noto Serif JP', serif;
+}
+
+.reservation-detail {
+  background: #ffffffdc;
+  border: 1px solid #e7e5e4;
+  border-radius: 1.25rem;
+  padding: 2rem;
 }
 
 .reservation-detail__row {

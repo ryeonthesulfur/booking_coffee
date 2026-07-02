@@ -6,24 +6,7 @@
 
 
 
-.confirm-seat-container {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-}
-
-
-
-.confirm-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #c3beba;
-}
-
-
+/*　確認フォーム　*/
 .confirm-container {
     display: flex;
     flex-direction: column;
@@ -58,7 +41,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 .confirm-user-name, .confirm-store-name, .confirm-seat-number,

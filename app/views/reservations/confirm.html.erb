@@ -1,80 +1,73 @@
-<% content_for :head do %>
-  <%= stylesheet_link_tag "confirm" %>
-<% end %>
-
 <div class="confirm-seat-container">
+  <div id="confirmed-seat" data-seat-number="<%= @seat.seat_number %>"></div>
 
-<div id="confirmed-seat" data-seat-number="<%= @seat.seat_number %>"></div>
-
-<% if @store.name == "蔵前喫茶店" %>
-  <%= render "stores/kuramae_floor", confirm_mode: true %>
-<% elsif @store.name == "カフェ・ロンド" %>
-  <%= render "stores/rondo_floor", confirm_mode: true %>
-<% elsif @store.name == "喫茶むすび" %>
-  <%= render "stores/musubi_floor", confirm_mode: true %>
-<% end %>
+  <% if @store.name == "蔵前喫茶店" %>
+    <%= render "stores/kuramae_floor", confirm_mode: true %>
+  <% elsif @store.name == "カフェ・ロンド" %>
+    <%= render "stores/rondo_floor", confirm_mode: true %>
+  <% elsif @store.name == "喫茶むすび" %>
+    <%= render "stores/musubi_floor", confirm_mode: true %>
+  <% end %>
 </div>
-
 
 <div class="confirm-container" style="background-image: url('<%= asset_path("WallPaper_3.png") %>'); background-size: cover; background-position: center;">
+  <div class="confirm-form">
+    <span class="confirm-title">予約確認</span>
+    <span class="confirm-subtitle">-------------------------------------------------------------------</span>
 
-<div class="confirm-form">
+    <%= form_with model: @reservation, url: store_seat_reservations_path(@store, @seat), local: true, data: { turbo: false } do |f| %>
+      <div class="confirm-content">
+        <label class="confirm-label">予約者名</label>
+        <span class="confirm-user-name"><%= @reservation.user.name %></span>
+      </div>
 
-  <span class="confirm-title">予約確認</span>
-  <span class="confirm-subtitle">-------------------------------------------------------------------</span>
+      <div class="confirm-content">
+        <label class="confirm-label">店舗名</label>
+        <span class="confirm-store-name"><%= @store.name %></span>
+      </div>
 
-<%= form_with model: @reservation, url: store_seat_reservations_path(@store, @seat), local: true, data: { turbo: false } do |f| %>
+      <div class="confirm-content">
+        <label class="confirm-label">座席番号</label>
+        <span class="confirm-seat-number"><%= @seat.seat_number %></span>
+      </div>
 
-<div class="confirm-content">
-    <label class="confirm-label">予約者名</label>
-<span class="confirm-user-name"><%= @reservation.user.name %><%= f.hidden_field value: @reservation.user.name %></span>
+      <div class="confirm-content">
+        <label class="confirm-label">予約時間</label>
+        <span class="confirm-start-time"><%= @reservation.start_time.strftime("%Y/%m/%d %H:%M〜") %>
+        <%= f.hidden_field :start_time, value: @reservation.start_time%></span>
+      </div>
+
+      <div class="confirm-content">
+        <label class="confirm-label">人数</label>
+        <span class="confirm-num-people"><%= @reservation.num_people %>
+        <%= f.hidden_field :num_people, value: @reservation.num_people%>名</span>
+      </div>
+
+      <div class="confirm-content">
+        <label class="confirm-label">電話番号</label>
+        <span class="confirm-phone-number"><%= @reservation.phone_number %>
+        <%= f.hidden_field :phone_number, value: @reservation.phone_number%></span>
+      </div>
+
+      <div class="confirm-content">
+        <label class="confirm-label">備考</label>
+        <span class="confirm-notes"><%= @reservation.notes %>
+        <%= f.hidden_field :notes, value: @reservation.notes%></span>
+      </div>
+
+      <div class="confirm-content">
+        <%= f.submit "予約を確定する", class: "btn-confirm" %>
+      </div>
+    <% end %>
+
+    <div class="confirm-content">
+      <%= link_to "予約内容を修正する", new_store_seat_reservation_path(
+        @store, @seat.seat_number, 
+        start_time: @reservation.start_time.strftime("%Y/%m/%d %H:%M"), 
+        num_people: @reservation.num_people, 
+        phone_number: @reservation.phone_number, 
+        notes: @reservation.notes), 
+        class: "btn-edit", data: { turbo: false } %>
+    </div>
+  </div>
 </div>
-
-<div class="confirm-content">
-    <label class="confirm-label">店舗名</label>
-<span class="confirm-store-name"><%= @store.name %><%= f.hidden_field value: @store.name %></span>
-</div>
-
-<div class="confirm-content">
-    <label class="confirm-label">座席番号</label>
-<span class="confirm-seat-number"><%= @seat.seat_number %><%= f.hidden_field value: @seat.seat_number %></span>
-</div>
-
-<div class="confirm-content">
-    <label class="confirm-label">予約時間</label>
-<span class="confirm-start-time"><%= @reservation.start_time.strftime("%Y/%m/%d %H:%M〜") %><%= f.hidden_field :start_time, value: @reservation.start_time.strftime("%Y/%m/%d %H:%M〜") %></span>
-</div>
-
-<div class="confirm-content">
-    <label class="confirm-label">人数</label>
-<span class="confirm-num-people"><%= @reservation.num_people %>名<%= f.hidden_field :num_people, value: @reservation.num_people %></span>
-</div>
-
-<div class="confirm-content">
-    <label class="confirm-label">電話番号</label>
-<span class="confirm-phone-number"><%= @reservation.phone_number %><%= f.hidden_field :phone_number, value: @reservation.phone_number %></span>
-</div>
-
-<div class="confirm-content">
-    <label class="confirm-label">備考</label>
-<span class="confirm-notes"><%= @reservation.notes %><%= f.hidden_field :notes, value: @reservation.notes %></span>
-</div>
-
-<div class="confirm-content">
-  <%= f.submit "予約を確定する", class: "btn-confirm" %>
-</div>
-<% end %>
-
-<div class="confirm-content">
-  <%= link_to "予約内容を修正する", new_store_seat_reservation_path(@store, @seat.seat_number, start_time: @reservation.start_time.strftime("%Y/%m/%d %H:%M"), num_people: @reservation.num_people, phone_number: @reservation.phone_number, notes: @reservation.notes), class: "btn-edit", data: { turbo: false } %>
-</div>
-
-</div>
-
-
-
-</div>
-
-
-   
-    

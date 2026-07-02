@@ -1,4 +1,4 @@
-<% content_for :store_css do %>
+３店舗<% content_for :store_css do %>
   <%= stylesheet_link_tag "store_floor_3" %>
 <% end %>
 
@@ -15,15 +15,15 @@
 
   <div class="legend-area">
     <div class="legend-item">
-      <div style="width: 16px; height: 16px; background: #fff; border: 1px solid #b5b4b1; border-radius: 4px;"></div>
+      <div class="legend-color legend-color--available"></div>
       <span>空席</span>
     </div>
     <div class="legend-item">
-      <div style="width: 16px; height: 16px; background: #78350f; border-radius: 4px;"></div>
+      <div class="legend-color legend-color--selected"></div>
       <span>選択中</span>
     </div>
     <div class="legend-item">
-      <div style="width: 16px; height: 16px; background: #d6d3d1; border-radius: 4px;"></div>
+      <div class="legend-color legend-color--reserved"></div>
       <span>予約済み</span>
     </div>
   </div>
