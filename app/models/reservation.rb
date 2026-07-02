@@ -17,7 +17,6 @@ def no_overlapping_reservation
     .where(seat: seat)
     .where(status: [ :reserved, :using ])
     .where("start_time > ? AND start_time < ?", start_time - 3.hours, start_time + 3.hours)
-    .where.not(id: id)
     .exists?
 
   errors.add(:start_time, "はすでに予約が入っています") if overlapping

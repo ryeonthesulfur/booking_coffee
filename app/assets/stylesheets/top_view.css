@@ -40,7 +40,6 @@ body {
   font-size: 1.6rem;
   font-weight: 900;
   color: #1c1917;
-  letter-spacing: -0.025em;
   font-family: 'Noto Serif JP', serif;
   text-decoration: none;
 }
@@ -194,7 +193,6 @@ body {
   overflow: hidden;
   border: 1px solid #e7e5e4;
   transition: all 0.3s;
-
 }
 
 .store-card:hover {
