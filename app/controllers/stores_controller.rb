@@ -17,7 +17,6 @@ class StoresController < ApplicationController
       start_time = Time.zone.parse(params[:start_time].delete("〜"))
 
       # ユーザーが選択した時刻(start_time)に利用中となる予約を探す
-      # 条件: 予約の開始時刻(S)が (start_time - 3時間) < S < (start_time + 3時間) の間にある
       @reserved_seat_numbers = @store.seats
         .joins(:reservations)
         .where(reservations: { status: [ :reserved, :using ] })

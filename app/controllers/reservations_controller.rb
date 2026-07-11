@@ -35,8 +35,6 @@ class ReservationsController < ApplicationController
     @store = Store.find(params[:store_id])
     @seat = Seat.find(params[:seat_id])
     @reservation = Reservation.new(reservation_params)
-    @reservation.user = current_user
-    @reservation.seat = @seat
     if @reservation.save
       redirect_to complete_store_seat_reservation_path(@store, @seat, @reservation)
     else
@@ -81,28 +79,3 @@ class ReservationsController < ApplicationController
     @reservation = current_user.reservations.find(params[:id])
   end
 end
-
-=begin
-
-reservations_controller.rb
-「seats#show」では、「/stores/:store_id/seats/:id(.:format) 」の「seats/:id」のidにはJSで「A-1」とかを入れて、
-コントローラーでは、それに該当するseat_idをfind_byで見つけさせて入れてたけど、
-それ以降はみつけさせたseat_id でデータを扱ってることになってるから、reservations コントローラーでは、seat_id でやらないといけない
-
-=end
-
-
-=begin
-
-「A-1」の座席を選択したら、valueの「A-1」が「document.querySelector('input[name="seat_id"]:checked').value;」で取得されて、「${seatNumber}」に「A-1」が入るということ。
-
-そしてそのURLがルーティングにいって、「resources :seats, only: [ :show ]」だから「shows コントローラー」に渡る。
-
-「A-1」は、「window.location.href」の時点ですでに「/stores/:store_id/seats/:id(.:format)  」の「:id」というデータとして扱われている。
-
-そして、seats コントローラーで、選択された座席の「A-1」はURIパターンとしての「:id」としてparamsに箱詰めされる。
-
-だから厳密には、seat の bigint としての id ではない。
-
-
-=end

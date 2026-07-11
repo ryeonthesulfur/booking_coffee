@@ -9,37 +9,27 @@ function getNextHalfHour() {
     // 例：14:45 → 時を+1して 15:00 にする（分・秒・ミリ秒はすべて0にリセット）
     now.setHours(now.getHours() + 1, 0, 0, 0);
   }
-  return now;   //// この時点での表示例 「Wed Jun 12 2024 14:30:00 GMT+0900」 (日本標準時)
-
+  return now;
 }
 
 // getNextHalfHour() の結果を "HH:mm" 形式の文字列にして返す
 // Flatpickr の minTime には文字列が必要なため
-// 例：{ hour: 9, min: 30 } → "09:30"
 function getNextHalfHourString() {
   const d = getNextHalfHour();
-  // getHours()で「時」、getMinutes()で「分」を取得
-  // String()で数値を文字列に変換し、padStart(2, '0')で、この文字列が2文字未満なら、先頭に '0' を付けて2文字にしてください」という意味。1桁なら先頭に0を付ける
-  // 例：9 → "09"、14 → "14"
-  // テンプレートリテラル（`${}`）で "09:30" のような文字列を組み立てる
   return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
 // 予約できる最大日付（今日から14日後）を返す
-// 例：今日が6月1日なら、6月15日が最大選択日になる
 function getMaxDate() {
-  const maxDate = new Date();                      // 今日の日付を取得し、「maxDate」に格納
-  maxDate.setDate(maxDate.getDate() + 14);         // 今日の日付を「getDate()」で取り出し、14を足す。そしてセットする。
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 14);
   return maxDate;
 }
 
 // HTMLのDOMが読み込み完了してから実行する。このファイルを記述していてflatpickrを使用するページならどれでも、'turbo:load'（画面のロード）をイベント発火として使うことで、ページ遷移後も正しく動作する。
 document.addEventListener('turbo:load', function () {
-
-  // ── Flatpickr（日時選択カレンダー）の初期化 ──
-  const dateInput = document.getElementById('date-input') || document.getElementById('reservation-date-input'); // 予約日時のinput要素
+  const dateInput = document.getElementById('date-input') || document.getElementById('reservation-date-input');
   if (dateInput) {  // 他のページでこのidが存在しない場合に備えてガード
-
     // URLの ?start_time= を取得する
     // 用途①: 間取り図ページで日時選択後にリロードされたとき → 選んでいた日時を復元する
     // 用途②: 予約フォームページを開いたとき → 間取り図で選んだ日時を自動入力する
@@ -47,34 +37,30 @@ document.addEventListener('turbo:load', function () {
     const startTimeParam = urlParams.get('start_time');
 
     let defaultDateVal;
-    // URLがあるのかどうか、ある場合はその日時が未来か過去かだけを判定して、初期値を決める。（日時表示の分岐のみなので、「isDefaultToday」と「minTime」で時間選択を決める。）
-    // URLがなければ、初期値は現在時刻より次の30分スロットになる。
+    // URLの日時が未来なら使い、過去なら次の30分スロットを初期値にする
     if (startTimeParam) {
       const parsed = new Date(startTimeParam.replace('〜', ''));  // "2026-05-17 14:30〜" → "2026-05-17 14:30" にしてからDateオブジェクトに変換
-      defaultDateVal = parsed > new Date() ? parsed : getNextHalfHour();  // URLの日時が未来なら使い、過去なら現在時刻より次の30分間を初期値にする（ただし、この時点ではその未来が今日中なのか翌日以降なのかまでは判定していない。）
+      defaultDateVal = parsed > new Date() ? parsed : getNextHalfHour();
     } else {
-      defaultDateVal = getNextHalfHour(); // 座席の予約間取り図画面に遷移した直後はこっち（現在時刻より次の３０分間）。
+      defaultDateVal = getNextHalfHour();
     }
 
-    // 指定した日時が今日中の未来時刻の場合、現在時刻以降のみを「minTime」で選択できるようにするため、今日かどうかを判定する。URL無しの場合（画面遷移直後）も同じ。
+    // 初期値が今日の日付かどうかを判定（今日なら現在時刻以降のみ選択可能にするため）
     const isDefaultToday = new Date(defaultDateVal).toDateString() === new Date().toDateString();
-
     flatpickr(dateInput, {
-      enableTime: true,               // 時刻も選択できるようにする
+      enableTime: true,               
       dateFormat: "Y-m-d H:i〜",        // サーバーに送る表示形式（例：2026年5月17日 14:30〜）
-      altInput: true,                 // 表示用の別inputを使う
+      altInput: true,                 
       altFormat: "Y年m月d日 H:i〜",     // ユーザーに見せる形式
-      locale: "ja",                   // カレンダーを日本語表示にする
+      locale: "ja",                   
       minDate: "today",               // 今日より前の日付は選択不可
       maxDate: getMaxDate(),          // 来週の土曜日まで選択可能
-      defaultDate: defaultDateVal,    // URLパラメーターがあればそれを初期値に、なければ現在時刻より次の30分スロットを初期値にする（座席の予約間取り図画面に遷移した直後は現在時刻なので、defaultDateValがそのまま入る。）
+      defaultDate: defaultDateVal,    // URLパラメーターがあればそれを初期値に、なければ次の30分スロットを初期値にする
       minTime: isDefaultToday ? getNextHalfHourString() : '00:00', // 今日なら現在時刻以降のみ、翌日以降なら00:00から選択可能
       time_24hr: true,                // 24時間表記（AM/PMではなく）
       minuteIncrement: 30,            // 分の選択を30分刻みにする
       
-      
       // 画面リロード時の時間選択範囲の判定だけでなく、カレンダーで日付を選択している最中でも同様の判定が機能するようにした。
-      // これがないと、翌日以降で、今日よりも過去の時刻で選択した場合、画面リロード後、カレンダー内では更新されず、今日の日付で過去の時刻を選択できてしまうため。
       onChange: function (selectedDates, dateStr, instance) {
         if (selectedDates.length === 0) return;
         const selected = selectedDates[0];
@@ -86,13 +72,13 @@ document.addEventListener('turbo:load', function () {
 
       // カレンダーを閉じたときに間取り図ページをリロードする
       // 選択された日時をURLパラメーターに付けてページ再ロードするのは、間取り図ページで選んだ日時を反映させるため。
-      // 予約フォームページでは、URLパラメーターがあればそれを初期値として使うので、選んだ日時がそのまま渡せる。
       onClose: function (selectedDates, dateStr, instance) {
         if (selectedDates.length === 0) return;
+        // 間取り図のページでのみ、URLを更新してリロードする
         if (document.querySelector('.floor-map-container')) {
-          const url = new URL(window.location.href);  // URLオブジェクトを作成
-          url.searchParams.set('start_time', dateStr);  // URLの ?start_time= に選んだ日時をセット（例：?start_time=2026-05-17%2014%3A30%EF%BD%9E）
-          window.location.href = url.toString();  // URLを更新してページを再ロード
+          const url = new URL(window.location.href);
+          url.searchParams.set('start_time', dateStr);
+          window.location.href = url.toString();
         }
       }
     });
