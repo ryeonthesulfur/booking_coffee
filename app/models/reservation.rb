@@ -6,13 +6,14 @@ class Reservation < ApplicationRecord
 
   validates :start_time, presence: true
   validates :num_people, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :phone_number, presence: true, format: { with: /\A\d[0-9]{10,11}\z/, messege: "は10〜11桁の半角数字で入力してください" }
+  validates :phone_number, presence: true, format: { with: /\A[0-9]{10,11}\z/, message: "は10〜11桁の半角数字で入力してください" }
 
   validate :no_overlapping_reservation
 
 private
 
 def no_overlapping_reservation
+  return if start_time.blank?
   overlapping = Reservation
     .where(seat: seat)
     .where(status: [ :reserved, :using ])
