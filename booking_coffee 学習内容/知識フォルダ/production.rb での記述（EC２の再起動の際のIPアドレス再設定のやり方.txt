@@ -1,0 +1,47 @@
+
+【production.rb での記述（EC２の再起動の際のIPアドレス再設定のやり方をメモ）】
+
+  config.action_mailer.default_url_options = { host: "35.77.45.25" }
+
+  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
+  # config.action_mailer.smtp_settings = {
+  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
+  #   password: Rails.application.credentials.dig(:smtp, :password),
+  #   address: "smtp.example.com",
+  #   port: 587,
+  #   authentication: :plain
+  # }
+
+
+
+ # Set host to be used by links generated in mailer templates.
+  config.action_mailer.default_url_options = { host: "52.199.88.113" }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: "apikey",
+    password: ENV["SENDGRID_API_KEY"],
+    address: "smtp.sendgrid.net",
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+
+
+
+
+2つ変更した。
+
+1. hostのIP更新（61行目）
+35.77.45.25 → 52.199.88.113
+
+EC2再起動でIPが変わったから。ここが古いIPのままだと、Deviseが送るメール内の確認リンクのURLが古いIPになってしまって、リンクをクリックしても開けない。
+
+2. SMTP設定を追加
+SendGrid経由でメールを送るための設定。
+
+address: "smtp.sendgrid.net" → SendGridのメールサーバー
+user_name: "apikey" → SendGridのSMTP認証はユーザー名が全員"apikey"固定
+password: ENV["SENDGRID_API_KEY"] → さっきEC2に設定した環境変数からAPIキーを読む
+これでRailsがメールを送るとき、EC2からSendGridに渡して、SendGridがユーザーのメールアドレスに届けてくれる。

@@ -19,7 +19,7 @@ https://example.com/search?keyword=coffee&page=2
 
 ```
 /stores/27/seats/A-1/reservations/new?start_time=2026%2F05%2F17...&num_people=2
-└──────────── パス ────────────┘└──────────── クエリパラメータ ────────────┘
+└──────────── パス ────────────┘　　　　└──────────── クエリパラメータ ────────────┘
 ```
 
 サーバー側ではRailsが自動でこれを分解し、`params[:start_time]`、`params[:num_people]` として読み取れるようにしてくれる。「URLを使って次の画面にデータを渡す」という仕組みの実体は、このクエリパラメータである。

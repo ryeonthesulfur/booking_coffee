@@ -1,0 +1,163 @@
+# 【reservations コントローラー】面接対策・質問事項予想
+
+---
+
+## 【「seat: :store」や「N+1問題」について聞かれる？？？】
+
+```ruby
+def index
+    @reservations = current_user.reservations.includes(seat: :store)
+```
+
+includesでネストされたアソシエーションを一度に読み込む。
+
+要するに「Reservation → Seat → Store」という2段階のアソシエーションを辿ることをRailsに伝えています。
+{親: 子} のハッシュ記法で「親を読むついでに子も読む」という指示です。
+
+もし1段階だけなら includes(:seat) で済みますが、ビューで r.seat.store.name のように2段階辿るのでここでは2段階分まとめて読み込んでいます。
+
+```ruby
+includes(seat: :store)
+# 意味：「seatを読み込み、さらにそのseatからstoreも読み込む」
+```
+
+左側（キー）の :seat → Reservation が持つアソシエーション（belongs_to :seat）
+右側（値）の :store → Seat が持つアソシエーション（belongs_to :store）
+
+---
+
+## 【予約修正の際のデータ処理（予約修正についてはすでに振り返ったが、コントローラーからの視点も一応確認したい）】
+## 【なぜ「find」ではなく、「find_by」を使うのか。双方の違いは？】
+
+```ruby
+def new
+    @seat = Seat.find_by(seat_number: params[:seat_id], store_id: params[:store_id])
+    @reservation = Reservation.new(params.permit(:start_time, :num_people, :phone_number, :notes))  # 予約内容修正の際、確認画面時点での情報をクエリパラメーターでそのまま渡すため。
+    @store = Store.find(params[:store_id])
+end
+```
+
+Seat.find_by(seat_number: params[:seat_id], store_id: ...) → なぜfindではなくfind_byを使うのか
+（params[:seat_id]は「A-1」という座席番号の文字列で、DBのidではないため）
+
+find メソッドは、DB上の整数の id で検索をします。
+一方、選択した座席は、id ではなく座席番号（A-1 など）でURLに挿入するようにしてあるので、コントローラーで再取得する際は find が使えません。
+そのため、整数ではない特定の座席番号を取得するには、該当する座席を直接探してくる find_by を使います。
+
+「find_by(seat_number: params[:seat_id]...」とあるように、「params[:seat_id]」となっているのは、
+ルーティングのパラメーター名が
+「/stores/:store_id/seats/:seat_id/reservations/new」
+となっているためです。実際には、「:seat_id」に座席番号を入れているのです。
+
+見つからなければ nil を返します（find は見つからないと例外を出します）。
+find_by(カラム名: 値) の形で、どのカラムでも検索できるのが特徴です。
+
+### 【params.permit(...) を直接使っていて、なぜ reservation_params を使わないのか】
+
+予約修正のリンクに記述したキーワード引数としてのデータは、ネストされないまま直で予約フォーム画面のURLに乗せて送ります。
+そしてルーティングで受け取った際、params には「:reservation」キーがないままコントローラーに渡されるので、「reservation_params」メソッドを引数にとっても
+require メソッドがキーを見つけられず、エラーになるからです。
+
+なのでデータの受け渡しはそのままフラットな構造にしています。
+
+---
+
+## 【「unless 〜 end」、「予約確認画面の間取り図」 は聞かれると思う。けど、確認画面の間取り図のロジックはすでに把握済】
+## 【@reservation = Reservation.new(reservation_params) の目的（保存前のオブジェクトを作ってバリデーションとstart_time取得に使うため）】
+
+```ruby
+ def confirm
+    @store = Store.find(params[:store_id])
+    @seat = Seat.find(params[:seat_id])
+    @reservation = Reservation.new(reservation_params)
+
+    unless @reservation.valid?
+      render "reservations/new", status: :unprocessable_entity and return
+    end
+
+    start_time = @reservation.start_time
+
+    # ユーザーが選択した時刻(start_time)に利用中となる予約を探す
+    # 条件: 予約の開始時刻(S)が (start_time - 3時間) < S < (start_time + 3時間) の間にある
+    @reserved_seat_numbers = @store.seats
+      .joins(:reservations)
+      .where(reservations: { status: [ :reserved, :using ] })
+      .where("reservations.start_time > ? AND reservations.start_time < ?", start_time - 3.hours, start_time + 3.hours)
+      .pluck(:seat_number)
+end
+```
+
+### 【「unless 〜 end」について、「.valid?」の意味について】
+
+unless の意味は、「〜でない限り」という意味です。
+valid? の意味は、「妥当かどうか」という意味です。
+
+つまり、「unless 〜 end」の「unless @reservation.valid?」は「バリデーションが妥当でない限り」はという意味です。
+全体の意味としては、バリデーションが妥当でない限りは、画面を予約フォーム画面（reservations/new）に戻すということです。
+
+### 【@reservation = Reservation.new(reservation_params) の目的】
+
+DBに保存する前にフォームから送られてきたデータ（電話番号・人数・日時など）をバリデーションにかけたり、
+予約済席のグレイアウト表示したりするため、新規データとして一旦ここに留めるため。
+
+---
+
+## 【save メソッドについて？？】
+
+saveとsave!の違い（!なしは失敗時にfalseを返す、!ありは例外を投げる）
+if @reservation.save の分岐で何をしているか
+
+```ruby
+  def create
+    @store = Store.find(params[:store_id])
+    @seat = Seat.find(params[:seat_id])
+    @reservation = Reservation.new(reservation_params)
+    if @reservation.save
+      redirect_to complete_store_seat_reservation_path(@store, @seat, @reservation)
+    else
+      render "reservations/new", status: :unprocessable_entity
+    end
+  end
+```
+
+saveメソッドで、「@reservation = Reservation.new(reservation_params)」の情報を保存します。
+保存後は、完了画面に遷移するようにしました。
+
+### 【「render "reservations/new", status: :unprocessable_entity」の意味】
+
+「指定したビューのHTMLを生成してレスポンスとして返す」メソッドです。redirect_toと違ってURLは変わらず、そのままビューを表示します。
+「reservations/new.html.erbを表示して、HTTPステータスコード422（入力エラー）を返す」という意味です。
+
+|  | render | redirect_to |
+|---|---|---|
+| 動き | そのままビューを表示する | ブラウザに「別のURLに行って」と指示する |
+| リクエスト数 | 1回（今のリクエスト内で完結） | 2回（指示→新しいリクエスト） |
+| URLの変化 | 変わらない | 変わる |
+| インスタンス変数 | そのまま引き継がれる | 引き継がれない（新しいリクエスト） |
+
+バリデーション失敗時は render でエラー付きのフォームを再表示し、保存成功時は redirect_to で別のページに移動させる、という使い分けが定番です。
+
+---
+
+```ruby
+  def complete
+    @store = Store.find(params[:store_id])
+    @seat = Seat.find(params[:seat_id])
+  end
+```
+
+@storeと@seatだけ取得して@reservationがないのはなぜか（これ答えられますか？）
+最後の質問だけ逆に確認させてください。completeアクションに@reservationが無い理由、分かりますか？
+
+自分の回答
+complete アクションに「@reservation」がないのは、そこではビューにおいて表示する実装をしていないからです。
+
+また、そもそもじゃあなぜそうしたのかについても理由はあります。
+それは完了画面から予約履歴画面に遷移すれば、予約内容は確認できるようにしてあるからです。
+もし、予約内容を再度確認したかったらそこから見てもらえればいいからです。
+
+===================================
+
+## 【「before_action :set_reservation, only: [ :complete, :destroy ]」を記述した理由】
+
+ログインしているユーザー以外の人から直接URLにデータを打ち込んで予約完了したり、データを削除したりできないようにするため。

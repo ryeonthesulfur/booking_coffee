@@ -1,0 +1,97 @@
+booking-coffee(dev):003> CancelNoShowReservationsJob.perform_now
+Performing CancelNoShowReservationsJob (Job ID: 5ec2a275-b387-4841-85a8-e7ba9c596596) from Async(default)
+↳ (booking-coffee):3:in `<main>'
+  Reservation Load (1.5ms)  SELECT `reservations`.* FROM `reservations` WHERE `reservations`.`status` = 0 AND `reservations`.`start_time` <= '2026-06-10 10:01:04.963315' /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+  User Load (0.2ms)  SELECT `users`.* FROM `users` WHERE `users`.`id` = 1 LIMIT 1 /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+  Rendering layout layouts/mailer.html.erb
+  Rendering reservation_mailer/reservation_cancelled.html.erb within layouts/mailer
+  Seat Load (0.3ms)  SELECT `seats`.* FROM `seats` WHERE `seats`.`id` = 142 LIMIT 1 /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+  Store Load (0.2ms)  SELECT `stores`.* FROM `stores` WHERE `stores`.`id` = 23 LIMIT 1 /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+  Rendered reservation_mailer/reservation_cancelled.html.erb within layouts/mailer (Duration: 14.9ms | GC: 0.0ms)
+  Rendered layout layouts/mailer.html.erb (Duration: 15.3ms | GC: 0.0ms)
+ReservationMailer#reservation_cancelled: processed outbound mail in 63.5ms
+Delivered mail 6a293965192e0_12e1618ec180af@HarutonoMacBook-Pro.local.mail (24.8ms)
+Date: Wed, 10 Jun 2026 19:16:05 +0900
+From: from@example.com
+To: test@test1
+Message-ID: <6a293965192e0_12e1618ec180af@HarutonoMacBook-Pro.local.mail>
+Subject: =?UTF-8?Q?=E3=80=90booking?=
+ =?UTF-8?Q?_coffee=E3=80=91=E3=81=94=E4=BA=88=E7=B4=84=E3=81=8C=E8=87=AA=E5=8B=95=E3=82=AD=E3=83=A3=E3=83=B3=E3=82=BB=E3=83=AB=E3=81=95=E3=82=8C=E3=81=BE=E3=81=97=E3=81=9F?=
+MIME-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: base64
+
+PCEtLSBCRUdJTiBhcHAvdmlld3MvbGF5b3V0cy9tYWlsZXIuaHRtbC5lcmIK
+LS0+PCFET0NUWVBFIGh0bWw+CjxodG1sPgogIDxoZWFkPgogICAgPG1ldGEg
+aHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7
+IGNoYXJzZXQ9dXRmLTgiPgogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNv
+bnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAi
+PgogICAgPHN0eWxlPgogICAgICAvKiDjg6Ljg5DjgqTjg6vnlKjjga7jg5Xj
+gqnjg7Pjg4jjgoTlvq7oqr/mlbTvvIjlv7Xjga7jgZ/jgoHjga7jg5Djg4Pj
+gq/jgqLjg4Pjg5fvvIkgKi8KICAgICAgYm9keSB7CiAgICAgICAgZm9udC1m
+YW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJ1Nl
+Z29lIFVJJywgUm9ib3RvLCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlm
+OwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvaGVhZD4KCiAgPGJvZHkgc3R5
+bGU9Im1hcmdpbjogMDsgcGFkZGluZzogMDsgd2lkdGg6IDEwMCUgIWltcG9y
+dGFudDsgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNDsgLXdlYmtpdC10ZXh0
+LXNpemUtYWRqdXN0OiAxMDAlOyAtbXMtdGV4dC1zaXplLWFkanVzdDogMTAw
+JTsiPgogICAgCiAgICA8ZGl2IHN0eWxlPSJ3aWR0aDogMTAwJTsgYmFja2dy
+b3VuZC1jb2xvcjogI2Y1ZjVmNDsgcGFkZGluZzogNDBweCAyMHB4OyBib3gt
+c2l6aW5nOiBib3JkZXItYm94OyI+CiAgICAgIDxkaXYgc3R5bGU9Im1heC13
+OiA1NDBweDsgbWFyZ2luOiAwIGF1dG87Ij4KICAgICAgICAKICAgICAgICA8
+ZGl2IHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7IG1hcmdpbi1ib3R0b206
+IDI0cHg7Ij4KICAgICAgICAgIDxoMSBzdHlsZT0iZm9udC1zaXplOiAyNHB4
+OyBmb250LXdlaWdodDogOTAwOyBjb2xvcjogIzFjMTkxNzsgbWFyZ2luOiAw
+OyBsZXR0ZXItc3BhY2luZzogLTAuMDI1ZW07Ij4KICAgICAgICAgICAgYm9v
+a2luZ19jb2ZmZWUKICAgICAgICAgIDwvaDE+CiAgICAgICAgPC9kaXY+Cgog
+ICAgICAgIDxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7
+IGJvcmRlcjogMXB4IHNvbGlkICNlN2U1ZTQ7IGJvcmRlci1yYWRpdXM6IDE2
+cHg7IHBhZGRpbmc6IDMycHg7IGJveC1zaGFkb3c6IDAgMXB4IDNweCAwIHJn
+YmEoMCwgMCwgMCwgMC4wNSk7Ij4KICAgICAgICAgIAogICAgICAgICAgPGRp
+diBzdHlsZT0iZm9udC1zaXplOiAxNHB4OyBsaW5lLWhlaWdodDogMS42OyBj
+b2xvcjogIzQ0NDAzYzsiPgogICAgICAgICAgICA8IS0tIEJFR0lOIGFwcC92
+aWV3cy9yZXNlcnZhdGlvbl9tYWlsZXIvcmVzZXJ2YXRpb25fY2FuY2VsbGVk
+Lmh0bWwuZXJiCi0tPjxwPuODj+ODq+ODneOCsyDmp5g8L3A+Cgo8cD7ku6Xk
+uIvjga7jgZTkuojntITjga/jgIHjg4Hjgqfjg4Pjgq/jgqTjg7PjgYznorro
+qo3jgafjgY3jgarjgYvjgaPjgZ/jgZ/jgoHoh6rli5Xjgq3jg6Pjg7Pjgrvj
+g6vjgZXjgozjgb7jgZfjgZ/jgII8L3A+Cgo8dGFibGU+CiAgPHRyPgogICAg
+PHRoPuW6l+iIlzwvdGg+CiAgICA8dGQ+5Zar6Iy244KA44GZ44GzPC90ZD4K
+ICA8L3RyPgogIDx0cj4KICAgIDx0aD7luK3nlarlj7c8L3RoPgogICAgPHRk
+PkMtMjwvdGQ+CiAgPC90cj4KICA8dHI+CiAgICA8dGg+5LqI57SE5pel5pmC
+PC90aD4KICAgIDx0ZD4yMDI25bm0MDbmnIgxMOaXpSAxOTowMDwvdGQ+CiAg
+PC90cj4KICA8dHI+CiAgICA8dGg+5Lq65pWwPC90aD4KICAgIDx0ZD4y5ZCN
+PC90ZD4KICA8L3RyPgo8L3RhYmxlPgoKPHA+44G+44Gf44Gu44GU5Yip55So
+44KS44GK5b6F44Gh44GX44Gm44GK44KK44G+44GZ44CCPC9wPgo8cD5ib29r
+aW5nIGNvZmZlZTwvcD4KPCEtLSBFTkQgYXBwL3ZpZXdzL3Jlc2VydmF0aW9u
+X21haWxlci9yZXNlcnZhdGlvbl9jYW5jZWxsZWQuaHRtbC5lcmIgLS0+CiAg
+ICAgICAgICA8L2Rpdj4KCiAgICAgICAgPC9kaXY+CgogICAgICAgIDxkaXYg
+c3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsgbWFyZ2luLXRvcDogMjRweDsi
+PgogICAgICAgICAgPHAgc3R5bGU9ImZvbnQtc2l6ZTogMTFweDsgY29sb3I6
+ICM3ODcxNmM7IG1hcmdpbjogMDsiPgogICAgICAgICAgICDigLvjgZPjga7j
+g6Hjg7zjg6vjga8gYm9va2luZ19jb2ZmZWUg44KI44KK6Ieq5YuV6YWN5L+h
+44GV44KM44Gm44GE44G+44GZ44CCCiAgICAgICAgICA8L3A+CiAgICAgICAg
+PC9kaXY+CgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgoKICA8L2JvZHk+Cjwv
+aHRtbD48IS0tIEVORCBhcHAvdmlld3MvbGF5b3V0cy9tYWlsZXIuaHRtbC5l
+cmIgLS0+
+
+  TRANSACTION (0.2ms)  BEGIN /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+  Reservation Destroy (1.3ms)  DELETE FROM `reservations` WHERE `reservations`.`id` = 16 /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+  TRANSACTION (0.9ms)  COMMIT /*application='BookingCoffee',job='CancelNoShowReservationsJob'*/
+Performed CancelNoShowReservationsJob (Job ID: 5ec2a275-b387-4841-85a8-e7ba9c596596) from Async(default) in 167.08ms
+↳ (booking-coffee):3:in `<main>'
+=> 
+[#<Reservation:0x000000010f6cd620
+  id: 16,
+  user_id: 1,
+  seat_id: 142,
+  start_time: "2026-06-10 19:00:00.000000000 +0900",
+  num_people: 2,
+  created_at: "2026-06-10 18:59:18.613981000 +0900",
+  updated_at: "2026-06-10 18:59:18.613981000 +0900",
+  phone_number: "09012345678",
+  notes: "",
+  end_time: nil,
+  total_price: nil,
+  status: "reserved">]
+booking-coffee(dev):004> 
