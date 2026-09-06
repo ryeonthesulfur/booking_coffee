@@ -1,4 +1,4 @@
-# 解説：`link_to` と `button_to` の違い
+# 解説：`link_to` と `button_to` の違い 260906
 
 ---
 

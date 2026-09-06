@@ -1,3 +1,7 @@
+// ============================================================
+// 【共通】間取り図ページ(stores#show) と 予約内容入力フォームページ(reservations#new) の両方で使用
+// ============================================================
+
 // 現在時刻から「次の30分スロット」のDateオブジェクトを返す
 // 例：14:10 → 14:30、14:45 → 15:00
 function getNextHalfHour() {
@@ -28,11 +32,13 @@ function getMaxDate() {
 
 // HTMLのDOMが読み込み完了してから実行する。このファイルを記述していてflatpickrを使用するページならどれでも、'turbo:load'（画面のロード）をイベント発火として使うことで、ページ遷移後も正しく動作する。
 document.addEventListener('turbo:load', function () {
+  // 'date-input'              → 間取り図ページ(stores#show) が持つID
+  // 'reservation-date-input'  → 予約フォームページ(reservations#new) が持つID  ← ★ここが予約フォームの入口
   const dateInput = document.getElementById('date-input') || document.getElementById('reservation-date-input');
   if (dateInput) {  // 他のページでこのidが存在しない場合に備えてガード
-    // URLの ?start_time= を取得する
+    // ★ URLの ?start_time= を取得する（予約フォームページでも使用）
     // 用途①: 間取り図ページで日時選択後にリロードされたとき → 選んでいた日時を復元する
-    // 用途②: 予約フォームページを開いたとき → 間取り図で選んだ日時を自動入力する
+    // 用途②: 予約フォームページを開いたとき → 間取り図で選んだ日時を自動入力する  ← ★予約フォームでの役割
     const urlParams = new URLSearchParams(window.location.search);
     const startTimeParam = urlParams.get('start_time');
 
@@ -70,11 +76,12 @@ document.addEventListener('turbo:load', function () {
         instance.set('minTime', isToday ? getNextHalfHourString() : '00:00');
       },
 
+      // ★ 予約フォームページでは onClose の中身は実行されない（下記のガード条件で弾かれる）
       // カレンダーを閉じたときに間取り図ページをリロードする
       // 選択された日時をURLパラメーターに付けてページ再ロードするのは、間取り図ページで選んだ日時を反映させるため。
       onClose: function (selectedDates, dateStr, instance) {
         if (selectedDates.length === 0) return;
-        // 間取り図のページでのみ、URLを更新してリロードする
+        // '.floor-map-container' は間取り図ページにしか存在しないため、予約フォームページではここでスキップされる
         if (document.querySelector('.floor-map-container')) {
           const url = new URL(window.location.href);
           url.searchParams.set('start_time', dateStr);
