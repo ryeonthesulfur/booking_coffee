@@ -25,7 +25,7 @@ Railsでは `app/views/layouts/application.html.erb` が全ページ共通の外
 ```
 
 `yield :head` が「ここに差し込んでいいよ」という受け口。
-
+V
 ---
 
 ## `content_for` の書き方
